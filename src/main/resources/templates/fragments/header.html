@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <!--    <title layout:title-pattern="$LAYOUT_TITLE | $CONTENT_TITLE">Header</title>-->
+    <title>Header | Kitchen Store</title>
+</head>
+<body>
+<!-- ======= Navbar Section ======= -->
+
+<nav th:fragment="nav-bar" class="navbar navbar-expand-lg navbar-dark bg-dark vh-50 bg-image mb-4">
+
+    <!-- ======= Toast Section ======= -->
+    <div class="toast align-items-center text-white bg-primary border-0 position-absolute d-none" role="alert"
+         aria-live="assertive" aria-atomic="true" id="toast">
+        <div class="d-flex">
+            <div class="toast-body">Hello, world! This is a toast message.</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+    </div>
+    <!-- End Toast -->
+
+    <div class="wrapper text-center">
+        <h2 class="text-white position-relative d-none heading" style="top: 25%">
+            <div class="ms-5 ps-4">Kitchen Story - Order Food Online</div>
+        </h2>
+    </div>
+    <div class="container-fluid nav-content">
+        <a class="navbar-brand align-self-start text-white" th:href="@{/}">Kitchen Story</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mx-auto px-2 row col-12">
+                <li class="nav-item col">
+                    <a class="nav-link text-center d-block active" aria-current="page" th:href="@{/menu}">Menu</a>
+                </li>
+
+                <!-- ======= Form Search Section ======= -->
+                <li class="nav-item col-7 align-self-center position-relative">
+                    <form class="row">
+                        <div class="col-10 p-0">
+                            <input class="form-control rounded-0 is-invalid" type="search"
+                                   placeholder="Search for a dish"
+                                   aria-label="Search" autofocus/>
+                        </div>
+                        <button class="btn btn-primary col rounded-0 input-group-text" type="submit">
+                            Search
+                        </button>
+                    </form>
+
+                    <div class="form-search position-absolute w-100 start-0 d-none">
+                        <div class="col-12 mx-auto mt-3 bg-dark px-3 py-4 rounded form-search-content">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-action active my-2 rounded"
+                                   aria-current="true">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">List group item heading</h5>
+                                        <small>3 days ago</small>
+                                    </div>
+                                    <p class="mb-1">
+                                        Some placeholder content in a paragraph.
+                                    </p>
+                                    <small>And some small print.</small>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action my-2 rounded"
+                                   aria-current="true">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">List group item heading</h5>
+                                        <small>3 days ago</small>
+                                    </div>
+                                    <p class="mb-1">
+                                        Some placeholder content in a paragraph.
+                                    </p>
+                                    <small>And some small print.</small>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!-- End Form Search  -->
+
+                <li class="nav-item dropdown col ms-5">
+                    <a class="nav-link dropdown-toggle text-white d-block text-center" href="#" id="navbarDropdown"
+                       role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        My Account
+                    </a>
+                    <ul class="dropdown-menu end-0" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" th:href="@{/login}">Login</a></li>
+                        <li><a class="dropdown-item" th:href="@{/sign-up}">Sign Up</a></li>
+                        <li>
+                            <hr class="dropdown-divider"/>
+                        </li>
+                        <div class="logged-in">
+                            <li>
+                                <a role="button" class="dropdown-item" href="#" data-bs-toggle="modal"
+                                   data-bs-target="#changePassword">Change Password</a>
+                            </li>
+                            <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
+                        </div>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+    <!-- ======= Model Section ======= -->
+    <div class="modal fade" id="changePassword">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Change Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">Enter you new password.</p>
+                    <form class="form-floating">
+                        <div class="form-floating mb-3 position-relative">
+                            <input type="email" class="form-control is-invalid" id="email"
+                                   placeholder="name@example.com" required
+                                   minlength="4"/>
+                            <div class="position-absolute show-password" onclick="showPassword(this)">
+                                <img src="../static/img/eye-slash.svg" alt="" width="20"/>
+                                <!-- <i class="eye-slash"></i> -->
+                            </div>
+                            <label for="email">Email address</label>
+                        </div>
+                        <div class="form-floating mb-3 position-relative">
+                            <input type="password" class="form-control is-valid" id="password" placeholder="Password"
+                                   required
+                                   minlength="4"/>
+                            <div class="position-absolute show-password" onclick="showPassword(this)">
+                                <img src="../static/img/eye-slash.svg" alt="" width="20"/>
+                                <!-- <i class="eye-slash"></i> -->
+                            </div>
+                            <label for="password">Password</label>
+                        </div>
+                        <button type="submit" class="btn btn-success">
+                            Change Password
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Model  -->
+</nav>
+
+<!-- End Navbar  -->
+</body>
+</html>

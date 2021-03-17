@@ -1,0 +1,11 @@
+#  thymeleaf Configuration
+thymeleaf:
+prefix: classpath:/templates/
+suffix: .html
+
+#   Server port
+server:
+  port: 5555
+  error:
+    whitelabel:
+      enabled: false
