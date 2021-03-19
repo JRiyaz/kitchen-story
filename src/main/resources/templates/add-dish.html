@@ -50,7 +50,7 @@
                         <select class="form-select" id="dish-type" th:field="*{type}" autofocus required
                                 th:classappend="${#fields.hasErrors('type')} ? 'is-invalid' : ''">
                             <option value="Biriyani" selected>Biriyani</option>
-                            <option value="Veg Biriyani">Veg Biriyani</option>
+                            <option value="Veg-Biriyani">Veg-Biriyani</option>
                         </select>
                         <label for="dish-type">Dish Type</label>
                         <div th:if="${#fields.hasErrors('type')}" th:errors="*{type}" class="invalid-feedback">

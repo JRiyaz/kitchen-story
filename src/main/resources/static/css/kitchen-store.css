@@ -72,6 +72,15 @@
      right: 40px;
      cursor: pointer;
 }
+
+#menu img {
+    height: 125px;
+}
+
+ .search {
+     top: 20%;
+     right:15px;
+}
  .trash {
      display: none;
      top: 32%;

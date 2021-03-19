@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Base64;
 
 @Entity
 @Data
@@ -71,5 +72,10 @@ public class DishEntity implements Serializable {
         this.normal = normal;
         this.image = image;
         this.description = description;
+    }
+
+    public static String bytesToImageConverter(byte[] imageInBytes) {
+
+        return imageInBytes != null && imageInBytes.length > 0 ? Base64.getEncoder().encodeToString(imageInBytes) : "";
     }
 }

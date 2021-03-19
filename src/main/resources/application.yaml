@@ -28,3 +28,9 @@ server:
   error:
     whitelabel:
       enabled: false
+
+#      spring:
+#        http:
+#          multipart:
+#            max-file-size: 30MB
+#            max-request-size: 30MB

@@ -5,11 +5,11 @@ import com.kitchenstory.service.DishService;
 import lombok.AllArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -28,15 +28,17 @@ public class DishController {
     }
 
     @PostMapping("add")
-    @ResponseBody
-    public DishEntity addDish(@Valid final DishEntity dish, BindingResult result) throws IOException {
+    public String addDish(@Valid final DishEntity dish, BindingResult result, Model model) throws IOException {
 
         if (result.hasErrors())
-            return null;
+            return "add-dish";
 
         final byte[] image = IOUtils.toByteArray(new URL(dish.getUrl()));
         dish.setImage(image);
 
-        return dishService.save(dish);
+        final DishEntity dishEntity = dishService.save(dish);
+
+        model.addAttribute("dish", dishEntity);
+        return "redirect:/?add-dish=true";
     }
 }
