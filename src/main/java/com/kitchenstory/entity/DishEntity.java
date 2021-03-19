@@ -39,12 +39,11 @@ public class DishEntity implements Serializable {
     private String spicy;
 
     @Column(length = 10, nullable = false)
-    @NotNull(message = "Price cannot be null")
     @Min(value = 100, message = "Price must be minimum of 100")
     private Double price;
 
     @Column(length = 3, nullable = false)
-    @NotNull(message = "Rating cannot be null")
+    @Min(value = 2, message = "Rating cannot be null")
     private Double rating;
 
     @Column(length = 50, nullable = false)
@@ -52,6 +51,7 @@ public class DishEntity implements Serializable {
     private String normal;
 
     @Transient
+    @NotNull(message = "URL field cannot be null")
     private String url;
 
     @Lob

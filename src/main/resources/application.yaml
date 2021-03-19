@@ -4,7 +4,7 @@ spring:
     database: POSTGRESQL
     show-sql: true
     hibernate:
-      ddl-auto: create  #validate, update, create-drop, create
+      ddl-auto: update  #validate, update, create-drop, create
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
     properties:
       hibernate.format_sql: true
