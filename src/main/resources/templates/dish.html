@@ -34,7 +34,7 @@
             <div class="content col">
                 <h1 th:text="${dish.name}">Meal Name</h1>
                 <h3 th:text="${dish.type}">Meal Type (Veg)</h3>
-                <h4 th:text="${dish.price}">Price</h4>
+                <h4 th:text="${'₹' + dish.price}">Price</h4>
                 <h5 class="text-success mb-1">Ready to Serve</h5>
                 <h5 th:text="${dish.rating + ' stars'}" class="mb-1">Ratings</h5>
                 <h5 class="lead text-info" th:text="${'Is Special: ' + dish.special}">Special</h5>
