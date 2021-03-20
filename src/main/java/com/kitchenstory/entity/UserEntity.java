@@ -1,6 +1,7 @@
 package com.kitchenstory.entity;
 
 import com.kitchenstory.model.UserRole;
+import com.kitchenstory.validator.UniqueEmailId;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -34,6 +35,7 @@ public class UserEntity implements Serializable {
     @Column(nullable = false, length = 100, unique = true, name = "email")
     @Email(message = "{user.email.invalid}")
     @NotEmpty(message = "Please enter email")
+    @UniqueEmailId(message="User with email id already exists")
     private String email;
 
     @Column(length = 10)
