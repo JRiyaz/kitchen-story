@@ -32,7 +32,7 @@ public class CartService {
         repository.deleteAll(carts);
     }
 
-    public Optional<CartEntity> findById(Integer id) {
+    public Optional<CartEntity> findByCartId(Integer id) {
         return repository.findById(id);
     }
 
