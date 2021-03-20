@@ -9,6 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Data
@@ -83,4 +84,150 @@ public class UserEntity implements Serializable {
     @Column(name = "user_role", length = 10)
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
+
+    @ToString.Exclude
+    @OneToMany(targetEntity = CardEntity.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "user_cards")
+    private List<CardEntity> cards;
+
+    @ToString.Exclude
+    @OneToMany(targetEntity = OrderEntity.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    private List<OrderEntity> orders;
+
+    @ToString.Exclude
+    @OneToOne(targetEntity = CartEntity.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "cart_id")
+    private CartEntity cart;
+
+    public UserEntity(String name, String email, String gender, String password, String address, String city,
+                      String state,  String zipcode,  Boolean terms, Boolean isAccountNonExpired,
+                      Boolean isAccountNonLocked, Boolean isCredentialsNonExpired, Boolean isEnabled,
+                      UserRole userRole, List<CardEntity> cards, List<OrderEntity> orders, CartEntity cart) {
+        this.name = name;
+        this.email = email;
+        this.gender = gender;
+        this.password = password;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zipcode = zipcode;
+        this.terms = terms;
+        this.isAccountNonExpired = isAccountNonExpired;
+        this.isAccountNonLocked = isAccountNonLocked;
+        this.isCredentialsNonExpired = isCredentialsNonExpired;
+        this.isEnabled = isEnabled;
+        this.userRole = userRole;
+        this.cards = cards;
+        this.orders = orders;
+        this.cart = cart;
+    }
+
+    public UserEntity(String name, String email, String gender, String password, String address, String city,
+                      String state,  String zipcode,  Boolean terms, Boolean isAccountNonExpired,
+                      Boolean isAccountNonLocked, Boolean isCredentialsNonExpired, Boolean isEnabled,
+                      UserRole userRole) {
+        this.name = name;
+        this.email = email;
+        this.gender = gender;
+        this.password = password;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zipcode = zipcode;
+        this.terms = terms;
+        this.isAccountNonExpired = isAccountNonExpired;
+        this.isAccountNonLocked = isAccountNonLocked;
+        this.isCredentialsNonExpired = isCredentialsNonExpired;
+        this.isEnabled = isEnabled;
+        this.userRole = userRole;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public UserEntity setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public UserEntity setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public UserEntity setGender(String gender) {
+        this.gender = gender;
+        return this;
+    }
+
+    public UserEntity setPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
+    public UserEntity setAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public UserEntity setCity(String city) {
+        this.city = city;
+        return this;
+    }
+
+    public UserEntity setState(String state) {
+        this.state = state;
+        return this;
+    }
+
+    public UserEntity setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+        return this;
+    }
+
+    public UserEntity setTerms(Boolean terms) {
+        this.terms = terms;
+        return this;
+    }
+
+    public UserEntity setAccountNonExpired(Boolean accountNonExpired) {
+        isAccountNonExpired = accountNonExpired;
+        return this;
+    }
+
+    public UserEntity setAccountNonLocked(Boolean accountNonLocked) {
+        isAccountNonLocked = accountNonLocked;
+        return this;
+    }
+
+    public UserEntity setCredentialsNonExpired(Boolean credentialsNonExpired) {
+        isCredentialsNonExpired = credentialsNonExpired;
+        return this;
+    }
+
+    public UserEntity setEnabled(Boolean enabled) {
+        isEnabled = enabled;
+        return this;
+    }
+
+    public UserEntity setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+        return this;
+    }
+
+    public UserEntity setCards(List<CardEntity> cards) {
+        this.cards = cards;
+        return this;
+    }
+
+    public UserEntity setOrders(List<OrderEntity> orders) {
+        this.orders = orders;
+        return this;
+    }
+
+    public UserEntity setCart(CartEntity cart) {
+        this.cart = cart;
+        return this;
+    }
 }

@@ -29,7 +29,7 @@ public class CartController {
         final CartEntity cart = cartService.findById(1)
                 .orElseThrow(() -> new CartNotFoundException("Dish with id: " + 1 + " not found."));
 
-        final List<DishEntity> dishes = cart.getDishEntities();
+        final List<DishEntity> dishes = cart.getDishes();
         final Integer count = dishes.size();
         final Double total = dishes.stream()
                 .map(dish -> dish.getPrice())
@@ -47,7 +47,7 @@ public class CartController {
         final DishEntity dish = dishService.findById(id)
                 .orElseThrow(() -> new DishNotFoundException("Dish with id: " + id + " not found."));
 
-        final CartEntity cart = new CartEntity(1, Arrays.asList(dish));
+        final CartEntity cart = new CartEntity(1, Arrays.asList(dish), null);
 
         cartService.save(cart);
 
@@ -60,7 +60,7 @@ public class CartController {
         final CartEntity cartEntity = cartService.findById(1)
                 .orElseThrow(() -> new CartNotFoundException("Dish with id: " + 1 + " not found."));
 
-        final List<DishEntity> dishes = cartEntity.getDishEntities();
+        final List<DishEntity> dishes = cartEntity.getDishes();
 
         final DishEntity dish = dishService.findById(id)
                 .orElseThrow(() -> new DishNotFoundException("Dish with id: " + id + " not found."));
@@ -69,7 +69,7 @@ public class CartController {
 
         cartService.deleteById(1);
 
-        final CartEntity cart = new CartEntity(1, dishes);
+        final CartEntity cart = new CartEntity(1, dishes, null);
 
         cartService.save(cart);
 

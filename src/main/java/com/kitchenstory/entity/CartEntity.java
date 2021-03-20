@@ -1,9 +1,6 @@
 package com.kitchenstory.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -17,6 +14,7 @@ import java.util.List;
 @DynamicInsert
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 @Table(name = "cart")
 public class CartEntity implements Serializable {
 
@@ -26,5 +24,9 @@ public class CartEntity implements Serializable {
 
     @ToString.Exclude
     @OneToMany(targetEntity = DishEntity.class, cascade = CascadeType.ALL)
-    private List<DishEntity> dishEntities;
+    private List<DishEntity> dishes;
+
+    @ToString.Exclude
+    @OneToOne(targetEntity = UserEntity.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cart")
+    private UserEntity user;
 }

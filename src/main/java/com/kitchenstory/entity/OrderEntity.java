@@ -1,9 +1,6 @@
 package com.kitchenstory.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
@@ -32,7 +29,20 @@ public class OrderEntity implements Serializable {
 
     private Integer quantity;
 
+    @ToString.Exclude
     @OneToMany(targetEntity = DishEntity.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "order_dishes")
     private List<DishEntity> dishes;
 
+    @ToString.Exclude
+    @ManyToOne(targetEntity = UserEntity.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "user_orders")
+    private UserEntity user;
+
+    public OrderEntity(Double billAmount, Integer quantity, List<DishEntity> dishes, UserEntity user) {
+        this.billAmount = billAmount;
+        this.quantity = quantity;
+        this.dishes = dishes;
+        this.user = user;
+    }
 }

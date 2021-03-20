@@ -2,6 +2,7 @@ package com.kitchenstory.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -19,6 +20,7 @@ import java.util.Base64;
 @DynamicInsert
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 @Table(name = "dishes")
 public class DishEntity implements Serializable {
 
