@@ -24,7 +24,7 @@ public class CartService {
         return repository.saveAll(carts);
     }
 
-    public void deleteById(Integer id) {
+    public void deleteByCartId(Integer id) {
         repository.deleteById(id);
     }
 

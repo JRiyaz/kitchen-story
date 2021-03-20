@@ -37,7 +37,7 @@
                             <small class="text-muted" th:text="${dish.type}">Type</small>
                         </div>
                         <span class="text-muted align-self-center" th:text="${'₹' + dish.price}">₹295</span>
-                        <a href="@{/cart/delete/{id}(id = ${dish.id})}" class="text-decoration-none trash text-danger">
+                        <a th:href="@{/cart/delete/{id}(id = ${dish.id})}" class="text-decoration-none trash text-danger">
                             <img th:src="@{img/trash.svg}" alt="" width="20"/>
                         </a>
                     </li>

@@ -30,13 +30,20 @@ public class CartController {
                 .orElseThrow(() -> new CartNotFoundException("Dish with id: " + 1 + " not found."));
 
         final List<DishEntity> dishes = cart.getDishEntities();
+        final Integer count = dishes.size();
+        final Double total = dishes.stream()
+                .map(dish -> dish.getPrice())
+                .mapToDouble(Double::doubleValue)
+                .sum();
 
         model.addAttribute("dishes", dishes);
+        model.addAttribute("count", count);
+        model.addAttribute("total", total);
         return "payment";
     }
 
     @GetMapping("add/{id}")
-    public String add(@PathVariable final String id) {
+    public String addDish(@PathVariable final String id) {
         final DishEntity dish = dishService.findById(id)
                 .orElseThrow(() -> new DishNotFoundException("Dish with id: " + id + " not found."));
 
@@ -46,4 +53,27 @@ public class CartController {
 
         return "redirect:/?add-to-cart=true";
     }
+
+    @GetMapping("delete/{id}")
+    public String deleteDish(@PathVariable final String id, Model model) {
+
+        final CartEntity cartEntity = cartService.findByCartId(1)
+                .orElseThrow(() -> new CartNotFoundException("Dish with id: " + 1 + " not found."));
+
+        final List<DishEntity> dishes = cartEntity.getDishEntities();
+
+        final DishEntity dish = dishService.findById(id)
+                .orElseThrow(() -> new DishNotFoundException("Dish with id: " + id + " not found."));
+
+        final boolean deleted = dishes.remove(dish);
+
+        cartService.deleteByCartId(1);
+
+        final CartEntity cart = new CartEntity(1, dishes);
+
+        cartService.save(cart);
+
+        return "redirect:/cart?dish-removed=true";
+    }
+
 }
