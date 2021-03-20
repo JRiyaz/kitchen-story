@@ -77,9 +77,9 @@
     height: 125px;
 }
 
- .search {
-     top: 20%;
-     right:15px;
+.product .image img {
+    height: 450px;
+    max-height: 450px;
 }
  .trash {
      display: none;

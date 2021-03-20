@@ -27,8 +27,9 @@ public class DishEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
     private String id;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 50, nullable = false, unique = true)
     @NotNull(message = "Dish name cannot be null")
+//    @UniqueElements(message = "Dish name already exists")
     private String name;
 
     @Column(length = 50, nullable = false)
@@ -49,7 +50,7 @@ public class DishEntity implements Serializable {
 
     @Column(length = 50, nullable = false)
     @NotNull(message = "Normal field cannot be null")
-    private String normal;
+    private String special;
 
     @Transient
     @NotNull(message = "URL field cannot be null")
@@ -62,14 +63,14 @@ public class DishEntity implements Serializable {
     @Column(length = 1000)
     private String description;
 
-    public DishEntity(String name, String type, String spicy, Double price, Double rating, String normal,
+    public DishEntity(String name, String type, String spicy, Double price, Double rating, String special,
                       byte[] image, String description) {
         this.name = name;
         this.type = type;
         this.spicy = spicy;
         this.price = price;
         this.rating = rating;
-        this.normal = normal;
+        this.special = special;
         this.image = image;
         this.description = description;
     }

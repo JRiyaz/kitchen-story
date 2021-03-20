@@ -33,7 +33,7 @@
             </div>
             <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-offset="0"
                  class="scrollspy-example col p-3 border border-dark rounded" tabindex="0">
-                <form class="col-6 position-relative my-4 mx-auto">
+                <form class="col-6 position-relative my-4 mx-auto shadow-sm">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
                            id="search" onkeyup="filterItems()" onchange="filterItems()"/>
                 </form>
@@ -50,7 +50,7 @@
                                     <div class="text-muted fw-bold mb-1" th:text=${dish.type}>category</div>
                                     <div class="row mb-1 col-4">
                                         <span class="badge rounded bg-warning col mx-1" th:text=${dish.spicy}>must taste</span>
-                                        <span class="badge rounded bg-info col mx-1" th:text=${dish.normal}>chef special</span>
+                                        <span class="badge rounded bg-info col mx-1" th:text=${dish.special}>chef special</span>
                                     </div>
                                     <p class="text-muted" th:text=${dish.price}>₹295</p>
                                 </div>
