@@ -35,7 +35,7 @@ public class UserEntity implements Serializable {
     @Column(nullable = false, length = 100, unique = true, name = "email")
     @Email(message = "{user.email.invalid}")
     @NotEmpty(message = "Please enter email")
-    @UniqueEmailId(message="User with email id already exists")
+    @UniqueEmailId(message = "User with email id already exists")
     private String email;
 
     @Column(length = 10)
@@ -89,7 +89,9 @@ public class UserEntity implements Serializable {
 
     @ToString.Exclude
     @OneToMany(targetEntity = CardEntity.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "user_cards")
+    @JoinTable(name = "user_cards",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "card_id"))
     private List<CardEntity> cards;
 
     @ToString.Exclude
@@ -102,7 +104,7 @@ public class UserEntity implements Serializable {
     private CartEntity cart;
 
     public UserEntity(String name, String email, String gender, String password, String address, String city,
-                      String state,  String zipcode,  Boolean terms, Boolean isAccountNonExpired,
+                      String state, String zipcode, Boolean terms, Boolean isAccountNonExpired,
                       Boolean isAccountNonLocked, Boolean isCredentialsNonExpired, Boolean isEnabled,
                       UserRole userRole, List<CardEntity> cards, List<OrderEntity> orders, CartEntity cart) {
         this.name = name;
@@ -125,7 +127,7 @@ public class UserEntity implements Serializable {
     }
 
     public UserEntity(String name, String email, String gender, String password, String address, String city,
-                      String state,  String zipcode,  Boolean terms, Boolean isAccountNonExpired,
+                      String state, String zipcode, Boolean terms, Boolean isAccountNonExpired,
                       Boolean isAccountNonLocked, Boolean isCredentialsNonExpired, Boolean isEnabled,
                       UserRole userRole) {
         this.name = name;

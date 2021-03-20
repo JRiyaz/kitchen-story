@@ -31,12 +31,16 @@ public class OrderEntity implements Serializable {
 
     @ToString.Exclude
     @OneToMany(targetEntity = DishEntity.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "order_dishes")
+    @JoinTable(name = "order_dishes",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "dish_id"))
     private List<DishEntity> dishes;
 
     @ToString.Exclude
     @ManyToOne(targetEntity = UserEntity.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "user_orders")
+    @JoinTable(name = "user_orders",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private UserEntity user;
 
     public OrderEntity(Double billAmount, Integer quantity, List<DishEntity> dishes, UserEntity user) {

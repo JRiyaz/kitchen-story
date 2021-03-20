@@ -24,6 +24,9 @@ public class CartEntity implements Serializable {
 
     @ToString.Exclude
     @OneToMany(targetEntity = DishEntity.class, cascade = CascadeType.ALL)
+    @JoinTable(name = "cart_dishes",
+            joinColumns = @JoinColumn(name = "cart_id"),
+            inverseJoinColumns = @JoinColumn(name = "dish_id"))
     private List<DishEntity> dishes;
 
     @ToString.Exclude
