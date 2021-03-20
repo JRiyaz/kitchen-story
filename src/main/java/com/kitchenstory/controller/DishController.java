@@ -25,7 +25,7 @@ public class DishController {
     private final DishService dishService;
 
     @GetMapping("{id}")
-    public String showItem(@PathVariable final String id, Model model) throws DishNotFoundException {
+    public String showItem(@PathVariable final String id, Model model) {
         final DishEntity dish = dishService.findById(id)
                 .orElseThrow(() -> new DishNotFoundException("Dish with id: " + id + " not found."));
 

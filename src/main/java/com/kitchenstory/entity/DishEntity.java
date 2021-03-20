@@ -19,7 +19,7 @@ import java.util.Base64;
 @DynamicInsert
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "dish")
+@Table(name = "dishes")
 public class DishEntity implements Serializable {
 
     @Id
