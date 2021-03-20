@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -29,6 +30,9 @@ public class OrderEntity implements Serializable {
 
     private Integer quantity;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
+
     @ToString.Exclude
     @OneToMany(targetEntity = DishEntity.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "order_dishes",
@@ -43,9 +47,10 @@ public class OrderEntity implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private UserEntity user;
 
-    public OrderEntity(Double billAmount, Integer quantity, List<DishEntity> dishes, UserEntity user) {
+    public OrderEntity(Double billAmount, Integer quantity, Date date, List<DishEntity> dishes, UserEntity user) {
         this.billAmount = billAmount;
         this.quantity = quantity;
+        this.date = date;
         this.dishes = dishes;
         this.user = user;
     }
