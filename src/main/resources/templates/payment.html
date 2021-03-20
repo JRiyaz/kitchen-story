@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Cart | Riyaz J</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.0.0-beta2/css/bootstrap.min.css} "/>
+
+    <!-- Custom CSS -->
+    <link th:href="@{/css/kitchen-store.css}" rel="stylesheet"/>
+</head>
+
+<body>
+
+<!-- ======= Container-Fluid Section ======= -->
+<div class="container-fluid p-0">
+    <!-- ======= Navbar Section ======= -->
+    <th:block th:replace="fragments/header :: nav-bar"></th:block>
+    <!-- End Navbar -->
+
+    <!-- ======= Container Section ======= -->
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-5 col-lg-4 order-2 cart">
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-muted ps-1">Your cart</span>
+                    <span class="badge bg-success rounded-pill" th:text="${count}">3</span>
+                </h4>
+                <ul class="list-group mb-3">
+                    <li class="list-group-item d-flex justify-content-between lh-sm position-relative cart-item"
+                        th:each="dish : ${dishes}">
+                        <div>
+                            <h6 class="my-0" th:text="${dish.name}">Product name</h6>
+                            <small class="text-muted" th:text="${dish.type}">Type</small>
+                        </div>
+                        <span class="text-muted align-self-center" th:text="${'₹' + dish.price}">₹295</span>
+                        <a href="@{/cart/delete/{id}(id = ${dish.id})}" class="text-decoration-none trash text-danger">
+                            <img th:src="@{img/trash.svg}" alt="" width="20"/>
+                        </a>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between mt-2 border-0">
+                        <span>Total</span>
+                        <strong th:text="${'₹' + total}">₹295</strong>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-7 col-lg-8">
+                <h4 class="mb-3">Payment Gateway</h4>
+                <form class="needs-validation" novalidate>
+                    <hr class="my-4"/>
+
+                    <h4 class="mb-3">Select Card type</h4>
+
+                    <div class="my-3">
+                        <div class="select-payment row col-5">
+                            <div class="col pe-0">
+                                <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off"
+                                       checked/>
+                                <label class="btn btn-outline-info" for="option1">Credit Card</label>
+                            </div>
+
+                            <div class="col p-0">
+                                <input type="radio" class="btn-check" name="options" id="option2"
+                                       autocomplete="off"/>
+                                <label class="btn btn-outline-success" for="option2">Debit Card</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row gy-3">
+                        <div class="col-md-6">
+                            <label for="cc-name" class="form-label">Name on card</label>
+                            <input type="text" class="form-control" id="cc-name" placeholder="" required
+                                   maxlength="4"/>
+                            <small class="text-muted">Full name as displayed on card</small>
+                            <div class="invalid-feedback">Name on card is required</div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="cc-number" class="form-label">Credit card number</label>
+                            <input type="number" class="form-control" id="cc-number" placeholder="" required
+                                   minlength="12" maxlength="12"/>
+                            <div class="invalid-feedback">
+                                Credit card number is required
+                            </div>
+                        </div>
+
+                        <div class="row mt-1 justify-content-around">
+                            <div class="col-9">
+                                <label for="expiry" class="mb-2">Expiration</label>
+                                <div class="row" id="expiry">
+                                    <div class="row col">
+                                        <label for="month-select" class="col-sm-3 col-form-label">Month</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-select" id="month-select"
+                                                    aria-label="Default select example">
+                                                <option value="Jan" selected>Jan</option>
+                                                <option value="Feb">Feb</option>
+                                                <option value="March">March</option>
+                                                <option value="April">April</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row col">
+                                        <label for="month-year" class="col-sm-2 col-form-label">Year</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-select" id="month-year"
+                                                    aria-label="Default select example">
+                                                <option value="2021" selected>2021</option>
+                                                <option value="2022">2022</option>
+                                                <option value="2023">2023</option>
+                                                <option value="2024">2024</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <label for="cc-cvv" class="form-label">CVV</label>
+                                <input type="number" class="form-control" id="cc-cvv" placeholder="" required
+                                       minlength="3" maxlength="3"/>
+                                <div class="invalid-feedback">Security code required</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4"/>
+
+                    <button class="w-100 btn btn-success" type="submit">
+                        Continue to checkout
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- End Container  -->
+
+    <!-- ======= Footer Section ======= -->
+    <th:block th:replace="fragments/footer :: footer"></th:block>
+    <!-- End Footer  -->
+</div>
+<!-- End  Container-Fluid -->
+
+<!--jQuery JS dependency-->
+<script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
+
+<!--Bootstrap JS dependency-->
+<script th:src="@{/webjars/bootstrap/5.0.0-beta2/js/bootstrap.min.js}"></script>
+
+<!--Custom JS-->
+<script th:src="@{/js/kitchen-store.js}"></script>
+</body>
+
+</html>
