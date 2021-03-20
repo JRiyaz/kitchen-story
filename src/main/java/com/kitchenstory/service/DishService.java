@@ -24,6 +24,10 @@ public class DishService {
         return repository.findById(id);
     }
 
+    public Optional<DishEntity> findByName(String name) {
+        return repository.findByName(name);
+    }
+
     public void deleteById(String id) {
         repository.deleteById(id);
     }

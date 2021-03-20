@@ -1,5 +1,6 @@
 package com.kitchenstory.entity;
 
+import com.kitchenstory.validator.UniqueDishName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -31,7 +32,7 @@ public class DishEntity implements Serializable {
 
     @Column(length = 50, nullable = false, unique = true)
     @NotNull(message = "Dish name cannot be null")
-//    @UniqueElements(message = "Dish name already exists")
+    @UniqueDishName(message = "Dish name already exists")
     private String name;
 
     @Column(length = 50, nullable = false)
