@@ -24,15 +24,7 @@ public class CartEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "cart_id")
-    private Integer cartId;
-
     @ToString.Exclude
     @OneToMany(targetEntity = DishEntity.class, cascade = CascadeType.ALL)
     private List<DishEntity> dishEntities;
-
-    public CartEntity(Integer cartId, List<DishEntity> dishEntities) {
-        this.cartId = cartId;
-        this.dishEntities = dishEntities;
-    }
 }

@@ -26,7 +26,7 @@ public class CartController {
 
     @GetMapping()
     public String view(Model model) {
-        final CartEntity cart = cartService.findByCartId(1)
+        final CartEntity cart = cartService.findById(1)
                 .orElseThrow(() -> new CartNotFoundException("Dish with id: " + 1 + " not found."));
 
         final List<DishEntity> dishes = cart.getDishEntities();
@@ -57,7 +57,7 @@ public class CartController {
     @GetMapping("delete/{id}")
     public String deleteDish(@PathVariable final String id, Model model) {
 
-        final CartEntity cartEntity = cartService.findByCartId(1)
+        final CartEntity cartEntity = cartService.findById(1)
                 .orElseThrow(() -> new CartNotFoundException("Dish with id: " + 1 + " not found."));
 
         final List<DishEntity> dishes = cartEntity.getDishEntities();
@@ -67,7 +67,7 @@ public class CartController {
 
         final boolean deleted = dishes.remove(dish);
 
-        cartService.deleteByCartId(1);
+        cartService.deleteById(1);
 
         final CartEntity cart = new CartEntity(1, dishes);
 

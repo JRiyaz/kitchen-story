@@ -24,7 +24,7 @@ public class CartService {
         return repository.saveAll(carts);
     }
 
-    public void deleteByCartId(Integer id) {
+    public void deleteById(Integer id) {
         repository.deleteById(id);
     }
 
@@ -32,7 +32,7 @@ public class CartService {
         repository.deleteAll(carts);
     }
 
-    public Optional<CartEntity> findByCartId(Integer id) {
+    public Optional<CartEntity> findById(Integer id) {
         return repository.findById(id);
     }
 
