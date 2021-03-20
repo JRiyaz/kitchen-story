@@ -32,4 +32,9 @@ public class CartEntity implements Serializable {
     @ToString.Exclude
     @OneToOne(targetEntity = UserEntity.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cart")
     private UserEntity user;
+
+    public CartEntity(List<DishEntity> dishes, UserEntity user) {
+        this.dishes = dishes;
+        this.user = user;
+    }
 }

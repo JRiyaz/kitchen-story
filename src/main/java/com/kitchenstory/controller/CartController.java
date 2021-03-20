@@ -2,10 +2,12 @@ package com.kitchenstory.controller;
 
 import com.kitchenstory.entity.CartEntity;
 import com.kitchenstory.entity.DishEntity;
-import com.kitchenstory.exceptions.CartNotFoundException;
+import com.kitchenstory.entity.UserEntity;
 import com.kitchenstory.exceptions.DishNotFoundException;
+import com.kitchenstory.exceptions.UserNotFoundException;
 import com.kitchenstory.service.CartService;
 import com.kitchenstory.service.DishService;
+import com.kitchenstory.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,11 +25,14 @@ public class CartController {
 
     private final CartService cartService;
     private final DishService dishService;
+    private final UserService userService;
 
     @GetMapping()
     public String view(CartEntity cartEntity, Model model) {
-        final CartEntity cart = cartService.findById(1)
-                .orElseThrow(() -> new CartNotFoundException("Dish with id: " + 1 + " not found."));
+        final UserEntity user = userService.findByEmail("j.riyazu@gmail.com")
+                .orElseThrow(() -> new UserNotFoundException("User with Email Id: j.riyazu@gmail.com not found."));
+
+        final CartEntity cart = user.getCart();
 
         final List<DishEntity> dishes = cart.getDishes();
         final Integer count = dishes.size();
@@ -45,11 +50,18 @@ public class CartController {
 
     @GetMapping("add/{id}")
     public String addDish(@PathVariable final String id) {
+        final UserEntity user = userService.findByEmail("j.riyazu@gmail.com")
+                .orElseThrow(() -> new UserNotFoundException("User with Email Id: j.riyazu@gmail.com not found."));
+
         final DishEntity dish = dishService.findById(id)
                 .orElseThrow(() -> new DishNotFoundException("Dish with id: " + id + " not found."));
 
-        final CartEntity cart = new CartEntity(1, Arrays.asList(dish), null);
+        CartEntity cart = user.getCart();
 
+        if (cart == null)
+            cart = new CartEntity(null, user);
+
+        cart.setDishes(Arrays.asList(dish));
         cartService.save(cart);
 
         return "redirect:/?add-to-cart=true";
@@ -58,20 +70,19 @@ public class CartController {
     @GetMapping("delete/{id}")
     public String deleteDish(@PathVariable final String id, Model model) {
 
-        final CartEntity cartEntity = cartService.findById(1)
-                .orElseThrow(() -> new CartNotFoundException("Dish with id: " + 1 + " not found."));
+        final UserEntity user = userService.findByEmail("j.riyazu@gmail.com")
+                .orElseThrow(() -> new UserNotFoundException("User with Email Id: j.riyazu@gmail.com not found."));
 
-        final List<DishEntity> dishes = cartEntity.getDishes();
+        final CartEntity cart = user.getCart();
+
+        final List<DishEntity> dishes = cart.getDishes();
 
         final DishEntity dish = dishService.findById(id)
                 .orElseThrow(() -> new DishNotFoundException("Dish with id: " + id + " not found."));
 
-        final boolean deleted = dishes.remove(dish);
+        dishes.remove(dish);
 
-        cartService.deleteById(1);
-
-        final CartEntity cart = new CartEntity(1, dishes, null);
-
+        cart.setDishes(dishes);
         cartService.save(cart);
 
         return "redirect:/cart?dish-removed=true";
