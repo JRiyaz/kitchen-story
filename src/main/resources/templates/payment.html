@@ -37,7 +37,8 @@
                             <small class="text-muted" th:text="${dish.type}">Type</small>
                         </div>
                         <span class="text-muted align-self-center" th:text="${'₹' + dish.price}">₹295</span>
-                        <a th:href="@{/cart/delete/{id}(id = ${dish.id})}" class="text-decoration-none trash text-danger">
+                        <a th:href="@{/cart/delete/{id}(id = ${dish.id})}"
+                           class="text-decoration-none trash text-danger">
                             <img th:src="@{img/trash.svg}" alt="" width="20"/>
                         </a>
                     </li>
@@ -50,23 +51,23 @@
             </div>
             <div class="col-md-7 col-lg-8">
                 <h4 class="mb-3">Payment Gateway</h4>
-                <form class="needs-validation" novalidate>
+                <form th:object="${cardEntity}" method="POST" th:action="@{/order/add}">
                     <hr class="my-4"/>
 
                     <h4 class="mb-3">Select Card type</h4>
 
                     <div class="my-3">
                         <div class="select-payment row col-5">
-                            <div class="col pe-0">
-                                <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off"
-                                       checked/>
-                                <label class="btn btn-outline-info" for="option1">Credit Card</label>
-                            </div>
-
-                            <div class="col p-0">
-                                <input type="radio" class="btn-check" name="options" id="option2"
-                                       autocomplete="off"/>
-                                <label class="btn btn-outline-success" for="option2">Debit Card</label>
+                            <div class="col pe-0" th:each="card : ${cards}">
+                                <input type="radio" class="btn-check" th:field="*type" th:id="${card}"
+                                       autocomplete="off"
+                                       th:checked="${card == 'Credit}" autofocus
+                                       th:classappend="${#fields.hasErrors('type')} ? 'is-invalid' : ''"/>
+                                <label class="btn btn-outline-info" th:for="${card}" th:text="${card + 'Card'}">Credit
+                                    Card</label>
+                                <div th:if="${#fields.hasErrors('type')}" th:errors="*{type}" class="text-danger">
+                                    Select Card type.
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -74,18 +75,31 @@
                     <div class="row gy-3">
                         <div class="col-md-6">
                             <label for="cc-name" class="form-label">Name on card</label>
-                            <input type="text" class="form-control" id="cc-name" placeholder="" required
-                                   maxlength="4"/>
-                            <small class="text-muted">Full name as displayed on card</small>
-                            <div class="invalid-feedback">Name on card is required</div>
+                            <input type="text" class="form-control" id="cc-name" placeholder="Riyaz J" required
+                                   maxlength="4" autofocus th:field="*nameOnCard"
+                                   th:classappend="${#fields.hasErrors('nameOnCard')} ? 'is-invalid' : ''"/>
+                            <small class="text-warning" autofocus
+                                   th:classappend="${#fields.hasErrors('nameOnCard')} ? 'd-none' : ''">
+                                Full name as displayed on card
+                            </small>
+                            <div th:if="${#fields.hasErrors('nameOnCard')}" th:errors="*{nameOnCard}"
+                                 class="text-danger">
+                                Invalid Card Name.
+                            </div>
                         </div>
 
                         <div class="col-md-6">
-                            <label for="cc-number" class="form-label">Credit card number</label>
-                            <input type="number" class="form-control" id="cc-number" placeholder="" required
-                                   minlength="12" maxlength="12"/>
-                            <div class="invalid-feedback">
-                                Credit card number is required
+                            <label for="cc-number" class="form-label">Card number</label>
+                            <input type="number" class="form-control" id="cc-number" placeholder="1254678912346789"
+                                   required
+                                   minlength="12" maxlength="12" th:field="*number" autofocus
+                                   th:classappend="${#fields.hasErrors('number')} ? 'is-invalid' : ''"/>
+                            <small class="text-warning" autofocus
+                                   th:classappend="${#fields.hasErrors('number')} ? 'd-none' : ''">
+                                Card Number must be 12 digit number
+                            </small>
+                            <div th:if="${#fields.hasErrors('number')}" th:errors="*{number}" class="text-danger">
+                                Invalid Card Number.
                             </div>
                         </div>
 
@@ -96,24 +110,38 @@
                                     <div class="row col">
                                         <label for="month-select" class="col-sm-3 col-form-label">Month</label>
                                         <div class="col-sm-9">
-                                            <select class="form-select" id="month-select"
-                                                    aria-label="Default select example">
-                                                <option value="Jan" selected>Jan</option>
-                                                <option value="Feb">Feb</option>
+                                            <select class="form-select" id="month-select" autofocus required
+                                                    aria-label="Default select example" th:field="*month">
+                                                <option value="January" selected>January</option>
+                                                <option value="February">February</option>
                                                 <option value="March">March</option>
                                                 <option value="April">April</option>
+                                                <option value="May">May</option>
+                                                <option value="June">June</option>
+                                                <option value="July">July</option>
+                                                <option value="August">August</option>
+                                                <option value="September">September</option>
+                                                <option value="October">October</option>
+                                                <option value="November">November</option>
+                                                <option value="December">December</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="row col">
                                         <label for="month-year" class="col-sm-2 col-form-label">Year</label>
                                         <div class="col-sm-10">
-                                            <select class="form-select" id="month-year"
-                                                    aria-label="Default select example">
+                                            <select class="form-select" id="month-year" required autofocus
+                                                    aria-label="Default select example" th:field="*year">
                                                 <option value="2021" selected>2021</option>
                                                 <option value="2022">2022</option>
                                                 <option value="2023">2023</option>
                                                 <option value="2024">2024</option>
+                                                <option value="2025">2025</option>
+                                                <option value="2026">2026</option>
+                                                <option value="2027">2027</option>
+                                                <option value="2028">2028</option>
+                                                <option value="2029">2029</option>
+                                                <option value="2030">2030</option>
                                             </select>
                                         </div>
                                     </div>
@@ -121,9 +149,12 @@
                             </div>
                             <div class="col-3">
                                 <label for="cc-cvv" class="form-label">CVV</label>
-                                <input type="number" class="form-control" id="cc-cvv" placeholder="" required
-                                       minlength="3" maxlength="3"/>
-                                <div class="invalid-feedback">Security code required</div>
+                                <input type="number" class="form-control" id="cc-cvv" placeholder="458" required
+                                       minlength="3" maxlength="3" th:field="*cvv" autofocus
+                                       th:classappend="${#fields.hasErrors('cvv')} ? 'is-invalid' : ''"/>
+                                <div th:if="${#fields.hasErrors('cvv')}" th:errors="*{cvv}" class="text-danger">
+                                    Invalid Card CVV Number.
+                                </div>
                             </div>
                         </div>
                     </div>

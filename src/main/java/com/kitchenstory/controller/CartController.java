@@ -25,7 +25,7 @@ public class CartController {
     private final DishService dishService;
 
     @GetMapping()
-    public String view(Model model) {
+    public String view(CartEntity cartEntity, Model model) {
         final CartEntity cart = cartService.findById(1)
                 .orElseThrow(() -> new CartNotFoundException("Dish with id: " + 1 + " not found."));
 
@@ -39,6 +39,7 @@ public class CartController {
         model.addAttribute("dishes", dishes);
         model.addAttribute("count", count);
         model.addAttribute("total", total);
+        model.addAttribute("cards", Arrays.asList("Credit", "Debit"));
         return "payment";
     }
 
