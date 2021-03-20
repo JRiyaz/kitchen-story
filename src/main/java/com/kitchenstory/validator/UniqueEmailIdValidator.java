@@ -11,7 +11,7 @@ import java.util.Optional;
 public class UniqueEmailIdValidator implements ConstraintValidator<UniqueEmailId, String> {
 
     @Autowired
-    public UserService userService;
+    private UserService userService;
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
