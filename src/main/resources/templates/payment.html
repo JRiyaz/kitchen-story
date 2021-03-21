@@ -63,7 +63,7 @@
                         <div class="select-payment row col-5">
                             <div class="col pe-0" th:each="card : ${cards}">
                                 <input type="radio" class="btn-check" th:field="*{type}" th:id="${card}"
-                                       autocomplete="off"
+                                       autocomplete="off" th:value="${card}"
                                        th:checked="${card == 'Credit'}" autofocus
                                        th:classappend="${#fields.hasErrors('type')} ? 'is-invalid' : ''"/>
                                 <label class="btn btn-outline-info" th:for="${card}" th:text="${card + 'Card'}">Credit

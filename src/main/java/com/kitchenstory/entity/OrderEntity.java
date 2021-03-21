@@ -47,8 +47,8 @@ public class OrderEntity implements Serializable {
     @Column(length = 4)
     private Integer year;
 
-    @Min(value = 3, message = "CVV number must be 3 digit number")
-    @Max(value = 3, message = "CVV number must be 3 digit number")
+    @Min(value = 3, message = "CVV must be 3 digit number")
+    @Max(value = 3, message = "CVV must be 3 digit number")
     @Column(length = 3)
     private Integer cvv;
 

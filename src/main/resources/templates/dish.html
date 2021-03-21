@@ -39,11 +39,11 @@
                 <h5 th:text="${dish.rating + ' stars'}" class="mb-1">Ratings</h5>
                 <h5 class="lead text-info" th:text="${'Is Special: ' + dish.special}">Special</h5>
                 <h5 class="lead text-warning" th:text="${'Is Spicy: ' + dish.spicy}">Spicy</h5>
-                <div class="button-section row mt-5">
-                    <a th:href="@{/order/checkout/{id}(id = ${dish.id})}" class="btn btn-success col mx-1">
-                        Order It
-                    </a>
-                    <a th:href="@{/cart/add/{id}(id = ${dish.id})}" class="btn btn-info col mx-1">
+                <div class="button-section row mt-5 mx-auto">
+<!--                    <a th:href="@{/order/checkout/{id}(id = ${dish.id})}" class="btn btn-success col mx-1">-->
+<!--                        Order It-->
+<!--                    </a>-->
+                    <a th:href="@{/cart/add/{id}(id = ${dish.id})}" class="btn btn-info col-6 mx-1">
                         Add to Cart
                     </a>
                 </div>

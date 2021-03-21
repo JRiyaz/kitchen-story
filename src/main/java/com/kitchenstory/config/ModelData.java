@@ -9,7 +9,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +20,7 @@ import java.util.Optional;
 public class ModelData {
 
     private final UserService userService;
+    private final HttpServletRequest request;
 
     @ModelAttribute("count")
     public Integer countOfDishesInCart() {
@@ -38,22 +41,31 @@ public class ModelData {
                 .sum() : 0.0;
     }
 
+    @ModelAttribute("cards")
+    public List<String> cards() {
+        return Arrays.asList("Credit", "Debit");
+    }
+
     private Optional<List<DishEntity>> getDishes() {
 
-        final List<DishEntity> dishes = new ArrayList<>();
+        final String uri = request.getRequestURI();
+        if (uri.contains("/order/cart") || uri.contains("/order/add")) {
+            final List<DishEntity> dishes = new ArrayList<>();
 
-        try {
-            final UserEntity user = userService.findByEmail("j.riyazu@gmail.com")
-                    .orElseThrow(() -> new UserNotFoundException("User with Email Id: j.riyazu@gmail.com not found."));
+            try {
+                final UserEntity user = userService.findByEmail("j.riyazu@gmail.com")
+                        .orElseThrow(() -> new UserNotFoundException("User with Email Id: j.riyazu@gmail.com not found."));
 
-            final Optional<CartEntity> cart = Optional.of(user.getCart());
+                final Optional<CartEntity> cart = Optional.of(user.getCart());
 
-            if (cart.isPresent())
-                dishes.addAll(cart.get().getDishes());
+                if (cart.isPresent())
+                    dishes.addAll(cart.get().getDishes());
 
-            return Optional.of(dishes);
-        } catch (Exception exception) {
-            return Optional.of(new ArrayList<>());
+                return Optional.of(dishes);
+            } catch (Exception exception) {
+                return Optional.of(new ArrayList<>());
+            }
         }
+        return Optional.of(new ArrayList<>());
     }
 }
