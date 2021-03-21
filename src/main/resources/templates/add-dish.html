@@ -88,7 +88,7 @@
 
                 <div class="col-md-5 my-2">
                     <div class="form-floating">
-                        <input type="number" class="form-control" id="rating" th:field="*{rating}" autofocus
+                        <input type="text" class="form-control" id="rating" th:field="*{rating}" autofocus
                                required list="dish-rating"
                                th:classappend="${#fields.hasErrors('rating')} ? 'is-invalid' : ''">
                         <label for="rating">Dish Rating</label>
@@ -120,7 +120,7 @@
 
                 <div class="col-md-10 my-2">
                     <div class="form-floating">
-                        <input type="url" class="form-control is-valid" id="image-url" th:field="*{url}" autofocus
+                        <input type="url" class="form-control" id="image-url" th:field="*{url}" autofocus
                                required minlength="3"
                                th:classappend="${#fields.hasErrors('url')} ? 'is-invalid' : ''">
                         <label for="image-url">Image URL</label>
