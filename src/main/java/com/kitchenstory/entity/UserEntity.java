@@ -88,13 +88,6 @@ public class UserEntity implements Serializable {
     private UserRole userRole;
 
     @ToString.Exclude
-    @OneToMany(targetEntity = CardEntity.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "user_cards",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "card_id"))
-    private List<CardEntity> cards;
-
-    @ToString.Exclude
     @OneToMany(targetEntity = OrderEntity.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     private List<OrderEntity> orders;
 
@@ -105,7 +98,7 @@ public class UserEntity implements Serializable {
     public UserEntity(String name, String email, String gender, String password, String address, String city,
                       String state, String zipcode, Boolean terms, Boolean isAccountNonExpired,
                       Boolean isAccountNonLocked, Boolean isCredentialsNonExpired, Boolean isEnabled,
-                      UserRole userRole, List<CardEntity> cards, List<OrderEntity> orders, CartEntity cart) {
+                      UserRole userRole, List<OrderEntity> orders, CartEntity cart) {
         this.name = name;
         this.email = email;
         this.gender = gender;
@@ -120,7 +113,6 @@ public class UserEntity implements Serializable {
         this.isCredentialsNonExpired = isCredentialsNonExpired;
         this.isEnabled = isEnabled;
         this.userRole = userRole;
-        this.cards = cards;
         this.orders = orders;
         this.cart = cart;
     }
@@ -216,11 +208,6 @@ public class UserEntity implements Serializable {
 
     public UserEntity setUserRole(UserRole userRole) {
         this.userRole = userRole;
-        return this;
-    }
-
-    public UserEntity setCards(List<CardEntity> cards) {
-        this.cards = cards;
         return this;
     }
 
