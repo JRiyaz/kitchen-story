@@ -1,10 +1,7 @@
 package com.kitchenstory.entity;
 
 import com.kitchenstory.validator.UniqueDishName;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
@@ -13,7 +10,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Base64;
 
 @Entity
 @Data
@@ -59,27 +55,36 @@ public class DishEntity implements Serializable {
     @NotNull(message = "URL field cannot be null")
     private String url;
 
-    @Lob
-    @Column(length = Integer.MAX_VALUE)
-    private byte[] image;
-
     @Column(length = 1000)
     private String description;
 
+    @ToString.Exclude
+    @ManyToOne(targetEntity = ImageEntity.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "image_id")
+    private ImageEntity image;
+
     public DishEntity(String name, String type, String spicy, Double price, Double rating, String special,
-                      byte[] image, String description) {
+                      String url, String description, ImageEntity image) {
         this.name = name;
         this.type = type;
         this.spicy = spicy;
         this.price = price;
         this.rating = rating;
         this.special = special;
-        this.image = image;
+        this.url = url;
         this.description = description;
+        this.image = image;
     }
 
-    public static String bytesToImageConverter(byte[] imageInBytes) {
-
-        return imageInBytes != null && imageInBytes.length > 0 ? Base64.getEncoder().encodeToString(imageInBytes) : "";
+    public DishEntity(String name, String type, String spicy, Double price, Double rating, String special,
+                      String url, String description) {
+        this.name = name;
+        this.type = type;
+        this.spicy = spicy;
+        this.price = price;
+        this.rating = rating;
+        this.special = special;
+        this.url = url;
+        this.description = description;
     }
 }
