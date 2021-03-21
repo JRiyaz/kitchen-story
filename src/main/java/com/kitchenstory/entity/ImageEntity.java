@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,6 +28,7 @@ public class ImageEntity implements Serializable {
 
     @Lob
     @Column(length = Integer.MAX_VALUE)
+    @Type(type = "org.hibernate.type.ImageType")
     private byte[] image;
 
     public ImageEntity(byte[] image) {

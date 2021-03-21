@@ -27,27 +27,6 @@ public class CartController {
     private final DishService dishService;
     private final UserService userService;
 
-    @GetMapping()
-    public String view(CartEntity cartEntity, Model model) {
-        final UserEntity user = userService.findByEmail("j.riyazu@gmail.com")
-                .orElseThrow(() -> new UserNotFoundException("User with Email Id: j.riyazu@gmail.com not found."));
-
-        final CartEntity cart = user.getCart();
-
-        final List<DishEntity> dishes = cart.getDishes();
-        final Integer count = dishes.size();
-        final Double total = dishes.stream()
-                .map(dish -> dish.getPrice())
-                .mapToDouble(Double::doubleValue)
-                .sum();
-
-        model.addAttribute("dishes", dishes);
-        model.addAttribute("count", count);
-        model.addAttribute("total", total);
-        model.addAttribute("cards", Arrays.asList("Credit", "Debit"));
-        return "payment";
-    }
-
     @GetMapping("add/{id}")
     public String addDish(@PathVariable final String id) {
         final UserEntity user = userService.findByEmail("j.riyazu@gmail.com")

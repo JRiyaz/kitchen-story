@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -26,10 +27,13 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderController {
 
-    private final OrderService orderService;
-    private final DishService dishService;
     private final CartService cartService;
     private final UserService userService;
+
+    @GetMapping("cart")
+    public String cart(OrderEntity orderEntity) {
+        return "payment";
+    }
 
     @PostMapping("add")
     public String add(@Valid OrderEntity orderEntity, BindingResult result, Model model) {

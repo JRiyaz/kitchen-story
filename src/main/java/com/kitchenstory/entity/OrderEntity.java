@@ -28,18 +28,18 @@ public class OrderEntity implements Serializable {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private String id;
 
-    @Column(length = 20)
     @NotNull(message = "Select your card")
+    @Column(length = 20)
     private String type;
 
-    @Column(length = 50)
     @NotNull(message = "Name on card cannot be null")
+    @Column(length = 50)
     private String nameOnCard;
 
-    @Column(length = 20)
     @Min(value = 12, message = "Card Number must be 12 digit number")
     @Max(value = 12, message = "Card Number must be 12 digit number")
-    private String number;
+    @Column(length = 12)
+    private Integer number;
 
     @Column(length = 10)
     private String month;
@@ -47,14 +47,15 @@ public class OrderEntity implements Serializable {
     @Column(length = 4)
     private Integer year;
 
-    @Column(length = 3)
     @Min(value = 3, message = "CVV number must be 3 digit number")
     @Max(value = 3, message = "CVV number must be 3 digit number")
+    @Column(length = 3)
     private Integer cvv;
 
     @Column(name = "bill_amount")
     private Double billAmount;
 
+    @Column(length = 5)
     private Integer quantity;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -69,9 +70,7 @@ public class OrderEntity implements Serializable {
 
     @ToString.Exclude
     @ManyToOne(targetEntity = UserEntity.class, fetch = FetchType.LAZY)
-    @JoinTable(name = "user_orders",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JoinColumn(name = "user_id")
     private UserEntity user;
 
     public OrderEntity(Double billAmount, Integer quantity, Date date, List<DishEntity> dishes, UserEntity user) {

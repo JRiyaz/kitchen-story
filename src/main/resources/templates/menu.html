@@ -44,7 +44,7 @@
                         <div class="d-flex w-100 my-2 item" th:each="dish : ${dishes}" th:if="${dish.type eq types.key}">
                             <a th:href="@{/dish/{id}(id = ${dish.id})}" class="text-decoration-none row">
                                 <img class="img-fluid col-3 rounded" th:alt="${dish.name}"
-                                     th:src="@{'data:image/png;base64,' + ${dish.bytesToImageConverter(dish.image)}}" height="130"/>
+                                     th:src="@{'data:image/png;base64,' + ${dish.image.bytesToImageConverter(dish.image.image)}}" height="130"/>
                                 <div class="col ps-3">
                                     <h3 class="mb-1" th:text=${dish.name}>Item 1</h3>
                                     <div class="text-muted fw-bold mb-1" th:text=${dish.type}>category</div>

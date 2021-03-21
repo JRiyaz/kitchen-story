@@ -27,7 +27,7 @@
         <div class="product row py-2 my-5">
             <div class="image col-8 px-4">
                 <img th:alt="${dish.name}"
-                     th:src="@{'data:image/png;base64,' + ${dish.bytesToImageConverter(dish.image)}}"
+                     th:src="@{'data:image/png;base64,' + ${dish.image.bytesToImageConverter(dish.image.image)}}"
                      class="img-fluid rounded w-100"
                 />
             </div>
