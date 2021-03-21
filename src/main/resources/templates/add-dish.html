@@ -105,14 +105,14 @@
 
                 <div class="col-md-5 my-2">
                     <div class="form-floating">
-                        <select class="form-select" id="chef-special" th:field="*{normal}" autofocus required
-                                th:classappend="${#fields.hasErrors('normal')} ? 'is-invalid' : ''">
+                        <select class="form-select" id="chef-special" th:field="*{special}" autofocus required
+                                th:classappend="${#fields.hasErrors('special')} ? 'is-invalid' : ''">
                             <option value="Normal" selected>Normal</option>
                             <option value="Special">Special</option>
                             <option value="Chef Special">Chef Special</option>
                         </select>
                         <label for="chef-special">Is Special</label>
-                        <div th:if="${#fields.hasErrors('normal')}" th:errors="*{normal}" class="invalid-feedback">
+                        <div th:if="${#fields.hasErrors('special')}" th:errors="*{special}" class="invalid-feedback">
                             Invalid value.
                         </div>
                     </div>
