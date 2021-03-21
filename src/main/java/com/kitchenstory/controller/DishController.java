@@ -1,6 +1,7 @@
 package com.kitchenstory.controller;
 
 import com.kitchenstory.entity.DishEntity;
+import com.kitchenstory.entity.ImageEntity;
 import com.kitchenstory.exceptions.DishNotFoundException;
 import com.kitchenstory.service.DishService;
 import lombok.AllArgsConstructor;
@@ -46,7 +47,8 @@ public class DishController {
             return "add-dish";
 
         final byte[] image = IOUtils.toByteArray(new URL(dish.getUrl()));
-        dish.setImage(image);
+        final ImageEntity file = new ImageEntity(image);
+        dish.setImage(file);
 
         final DishEntity dishEntity = dishService.save(dish);
 

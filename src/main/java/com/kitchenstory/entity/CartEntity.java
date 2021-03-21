@@ -30,7 +30,7 @@ public class CartEntity implements Serializable {
     private List<DishEntity> dishes;
 
     @ToString.Exclude
-    @OneToOne(targetEntity = UserEntity.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(targetEntity = UserEntity.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;
 

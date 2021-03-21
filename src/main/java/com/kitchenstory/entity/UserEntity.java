@@ -88,11 +88,11 @@ public class UserEntity implements Serializable {
     private UserRole userRole;
 
     @ToString.Exclude
-    @OneToMany(targetEntity = OrderEntity.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(targetEntity = OrderEntity.class, fetch = FetchType.LAZY, mappedBy = "user")
     private List<OrderEntity> orders;
 
     @ToString.Exclude
-    @OneToOne(targetEntity = CartEntity.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToOne(targetEntity = CartEntity.class, fetch = FetchType.LAZY, mappedBy = "user")
     private CartEntity cart;
 
     public UserEntity(String name, String email, String gender, String password, String address, String city,
