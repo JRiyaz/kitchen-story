@@ -6,7 +6,6 @@ import com.kitchenstory.entity.OrderEntity;
 import com.kitchenstory.entity.UserEntity;
 import com.kitchenstory.exceptions.UserNotFoundException;
 import com.kitchenstory.service.CartService;
-import com.kitchenstory.service.DishService;
 import com.kitchenstory.service.OrderService;
 import com.kitchenstory.service.UserService;
 import lombok.AllArgsConstructor;
@@ -18,9 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/order")
@@ -29,6 +28,7 @@ public class OrderController {
 
     private final CartService cartService;
     private final UserService userService;
+    private final OrderService orderService;
 
     @GetMapping("cart")
     public String cart(OrderEntity orderEntity) {
@@ -47,7 +47,7 @@ public class OrderController {
 
         final CartEntity cart = user.getCart();
 
-        List<DishEntity> dishes = cart.getDishes();
+        final List<DishEntity> dishes = cart.getDishes();
 
         //        Get the bill amount of all the dishes user is trying to order
         final Double billAmount = dishes.stream()
@@ -56,13 +56,12 @@ public class OrderController {
                 .sum();
 
         //        Save the order in database
-        final OrderEntity order = new OrderEntity(billAmount, dishes.size(), new Date(), dishes, user);
+        final OrderEntity order = new OrderEntity(orderEntity.getType(), orderEntity.getNameOnCard(),
+                orderEntity.getNumber(), orderEntity.getMonth(), orderEntity.getYear(), orderEntity.getCvv(), billAmount,
+                dishes.size(), new Date(), dishes.stream().collect(Collectors.toList()), user);
 
-        //        Update the card and order details to the user
-        user.setOrders(Arrays.asList(order));
-
-        //        Update the user with card details in database
-        userService.save(user);
+//        Save order in database
+        orderService.save(order);
 
         //        Delete the cart
         cartService.deleteById(cart.getId());

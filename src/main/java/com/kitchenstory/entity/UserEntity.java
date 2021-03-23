@@ -137,8 +137,9 @@ public class UserEntity implements Serializable {
         this.userRole = userRole;
     }
 
-    public void setId(String id) {
+    public UserEntity setId(String id) {
         this.id = id;
+        return this;
     }
 
     public UserEntity setName(String name) {

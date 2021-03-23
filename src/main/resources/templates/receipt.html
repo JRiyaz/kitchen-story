@@ -23,7 +23,7 @@
 
     <!-- ======= Container Section ======= -->
     <div class="container mt-5 mb-3">
-        <div class="card border-success shadow">
+        <div class="card border-success shadow mb-5">
             <div class="card-header bg-success">
                 <h3 class="py-1">Order Status</h3>
             </div>
@@ -32,13 +32,13 @@
                     soon
                 </h4>
 
-                <div class="col-7 mx-auto mt-5 p-4 border-3 border-bottom border-top border-success">
+                <div class="col-8 mx-auto mt-5 p-4 border-3 border-bottom border-top border-success">
                     <div class="text-info mt-2 mb-3">Payment Receipt</div>
                     <div class="">
                         <div class="row justify-content-end order-date mb-2">
                             <div class="date-section col mb-1">
                                 <div class="fw-bold">Date</div>
-                                <div th:text="${#temporals.format(order.date, 'dd-MM-yyyy HH:mm')}">40 Feb 2021</div>
+                                <div th:text="${#dates.format(order.date, 'dd-MMM-yyyy')}">40 Feb 2021</div>
                             </div>
 
                             <div class="order-no col mb-1">

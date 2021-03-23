@@ -62,8 +62,7 @@
                     <div class="my-3">
                         <div class="select-payment row col-5">
                             <div class="col pe-0" th:each="card : ${cards}">
-                                <input type="radio" class="btn-check" th:field="*{type}" th:id="${card}"
-                                       autocomplete="off" th:value="${card}"
+                                <input type="radio" class="btn-check" th:field="*{type}" th:id="${card}" th:value="${card}"
                                        th:checked="${card == 'Credit'}" autofocus
                                        th:classappend="${#fields.hasErrors('type')} ? 'is-invalid' : ''"/>
                                 <label class="btn btn-outline-info" th:for="${card}" th:text="${card + 'Card'}">Credit
@@ -79,7 +78,7 @@
                         <div class="col-md-6">
                             <label for="cc-name" class="form-label">Name on card</label>
                             <input type="text" class="form-control" id="cc-name" placeholder="Riyaz J" required
-                                   maxlength="4" autofocus th:field="*{nameOnCard}"
+                                   minlength="4" autofocus th:field="*{nameOnCard}"
                                    th:classappend="${#fields.hasErrors('nameOnCard')} ? 'is-invalid' : ''"/>
                             <small class="text-warning" autofocus
                                    th:classappend="${#fields.hasErrors('nameOnCard')} ? 'd-none' : ''">
