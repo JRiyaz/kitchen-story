@@ -27,6 +27,23 @@ function filterItems() {
   }
 }
 
+function onFormSubmit() {
+
+    const search = document.getElementById("header-search").value;
+
+    const url = [[@{/dish/all/search}]];
+    let response = await fetch(url);
+
+    let dishes = await response.json(); // read response body and parse as JSON
+
+    if (dishes) {
+
+
+    }
+
+}
+
+
 $(document).ready(function () {
   const options = {
     animation: true,

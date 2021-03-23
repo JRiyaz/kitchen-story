@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @AllArgsConstructor
@@ -36,11 +37,15 @@ public class CartController {
                 .orElseThrow(() -> new DishNotFoundException("Dish with id: " + id + " not found."));
 
         CartEntity cart = user.getCart();
-
+        final List<DishEntity> dishes = new ArrayList<>();
+        dishes.add(dish);
         if (cart == null)
-            cart = new CartEntity(null, user);
+            cart = new CartEntity(dishes.stream().collect(Collectors.toList()), user);
+        else
+            dishes.addAll(cart.getDishes());
 
-        cart.setDishes(Arrays.asList(dish));
+        cart.setDishes(dishes.stream()
+                .collect(Collectors.toList()));
         cartService.save(cart);
 
         return "redirect:/?add-to-cart=true";
@@ -64,7 +69,7 @@ public class CartController {
         cart.setDishes(dishes);
         cartService.save(cart);
 
-        return "redirect:/cart?dish-removed=true";
+        return "redirect:/?dish-removed=true";
     }
 
 }

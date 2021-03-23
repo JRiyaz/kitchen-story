@@ -61,8 +61,8 @@ public class OrderEntity implements Serializable {
     @ToString.Exclude
     @OneToMany(targetEntity = DishEntity.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "order_dishes",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "dish_id"))
+            joinColumns = @JoinColumn(name = "order_id", unique = false),
+            inverseJoinColumns = @JoinColumn(name = "dish_id", unique = false))
     private List<DishEntity> dishes;
 
     @ToString.Exclude

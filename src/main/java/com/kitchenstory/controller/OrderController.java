@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -30,9 +31,27 @@ public class OrderController {
     private final UserService userService;
     private final OrderService orderService;
 
+    @GetMapping("{id}")
+    public String one(@PathVariable String id, Model model) {
+        final OrderEntity order = orderService.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("Order with id: " + id + " not found."));
+        model.addAttribute("order", order);
+        return "order";
+    }
+
     @GetMapping("cart")
     public String cart(OrderEntity orderEntity) {
         return "payment";
+    }
+
+    @GetMapping("all")
+    public String all(Model model) {
+        final UserEntity user = userService.findByEmail("j.riyazu@gmail.com")
+                .orElseThrow(() -> new UserNotFoundException("User with Email Id: j.riyazu@gmail.com not found."));
+
+        final List<OrderEntity> orders = user.getOrders();
+        model.addAttribute("orders", orders);
+        return "orders";
     }
 
     @PostMapping("add")
