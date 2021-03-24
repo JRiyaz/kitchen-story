@@ -22,6 +22,31 @@ public class ModelData {
     private final UserService userService;
     private final HttpServletRequest request;
 
+    @ModelAttribute("gender")
+    public List<String> genders() {
+        return Arrays.asList("Male", "Female");
+    }
+
+    @ModelAttribute("statements")
+    public List<Boolean> statements() {
+        return Arrays.asList(true, false);
+    }
+
+    @ModelAttribute("roles")
+    public List<String> roles() {
+        return Arrays.asList("ROLE_USER", "ROLE_ADMIN", "ROLE_MANAGER");
+    }
+
+    @ModelAttribute("states")
+    public List<String> states() {
+        return Arrays.asList("AP", "Karnataka", "TamilNadu", "Kerala");
+    }
+
+    @ModelAttribute("types")
+    public List<String> dishType() {
+        return Arrays.asList("Veg", "Non-veg");
+    }
+
     @ModelAttribute("count")
     public Integer countOfDishesInCart() {
         return getDishes().isPresent() ? getDishes().get().size() : 0;

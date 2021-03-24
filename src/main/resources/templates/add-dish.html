@@ -7,10 +7,10 @@
     <title>Add Dish | Riyaz J</title>
 
     <!-- Bootstrap core CSS -->
-    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.0.0-beta2/css/bootstrap.min.css} " />
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.0.0-beta2/css/bootstrap.min.css} "/>
 
     <!-- Custom CSS -->
-    <link th:href="@{/css/kitchen-store.css}" rel="stylesheet" />
+    <link th:href="@{/css/kitchen-store.css}" rel="stylesheet"/>
 </head>
 
 <body>
@@ -39,7 +39,7 @@
                         <datalist id="dish-names">
                             <option value="Dum Biriyani">Dum Biriyani</option>
                         </datalist>
-                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback">
+                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">
                             Invalid Dish Name.
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                             <option value="Veg-Biriyani">Veg-Biriyani</option>
                         </select>
                         <label for="dish-type">Dish Type</label>
-                        <div th:if="${#fields.hasErrors('type')}" th:errors="*{type}" class="invalid-feedback">
+                        <div th:if="${#fields.hasErrors('type')}" th:errors="*{type}" class="text-danger">
                             Invalid Dish Type.
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                             <option value="Extra Chilly">Extra Chilly</option>
                         </select>
                         <label for="spicy">Spicy</label>
-                        <div th:if="${#fields.hasErrors('spicy')}" th:errors="*{spicy}" class="invalid-feedback">
+                        <div th:if="${#fields.hasErrors('spicy')}" th:errors="*{spicy}" class="text-danger">
                             Invalid Spicy value.
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                                minlength="2"
                                th:classappend="${#fields.hasErrors('price')} ? 'is-invalid' : ''">
                         <label for="price">Dish Price</label>
-                        <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="invalid-feedback">
+                        <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="text-danger">
                             Invalid Price.
                         </div>
                     </div>
@@ -97,7 +97,7 @@
                             <option value="4.5">4.5</option>
                             <option value="4">4</option>
                         </datalist>
-                        <div th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}" class="invalid-feedback">
+                        <div th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}" class="text-danger">
                             Invalid Dish Rating.
                         </div>
                     </div>
@@ -112,7 +112,7 @@
                             <option value="Chef Special">Chef Special</option>
                         </select>
                         <label for="chef-special">Is Special</label>
-                        <div th:if="${#fields.hasErrors('special')}" th:errors="*{special}" class="invalid-feedback">
+                        <div th:if="${#fields.hasErrors('special')}" th:errors="*{special}" class="text-danger">
                             Invalid value.
                         </div>
                     </div>
@@ -124,7 +124,7 @@
                                required minlength="3"
                                th:classappend="${#fields.hasErrors('url')} ? 'is-invalid' : ''">
                         <label for="image-url">Image URL</label>
-                        <div th:if="${#fields.hasErrors('url')}" th:errors="*{url}" class="invalid-feedback">
+                        <div th:if="${#fields.hasErrors('url')}" th:errors="*{url}" class="text-danger">
                             Invalid Image URL.
                         </div>
                     </div>
@@ -139,7 +139,7 @@
                             </textarea>
                         <label for="description">Description</label>
                         <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
-                             class="invalid-feedback">
+                             class="text-danger">
                             Please Leave a comment.
                         </div>
                     </div>

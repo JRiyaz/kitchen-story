@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <title>Orders | Riyaz J</title>
+    <title>Users | Riyaz J</title>
 
     <!-- Bootstrap core CSS -->
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.0.0-beta2/css/bootstrap.min.css} "/>
@@ -24,37 +24,41 @@
     <!-- ======= Container Section ======= -->
     <div class="container my-5">
         <div class="w-100 mb-3">
-            <h1>All Orders</h1>
+            <h1>All Users</h1>
         </div>
         <table id="example" class="display w-100">
             <thead>
             <tr>
-                <th>No</th>
-                <th>Bill Amount</th>
-                <th>Date</th>
-                <th>No.Of Items</th>
-                <th>User</th>
+                <th>Name</th>
+                <th>Email ID</th>
+                <th>Gender</th>
+                <th>Role</th>
+                <th>Is Enabled</th>
                 <th>view</th>
+                <th>Edit</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="order : ${orders}">
-                <td th:text="${'₹' + order.billAmount}">₹500</td>
-                <td th:text="${#dates.format(order.date, 'dd-MMM-yyyy')}">15-feb-2020</td>
-                <td th:text="${order.quantity}">Edinburgh</td>
-                <td><a th:href="@{/user/{id}(id = ${order.user.id})}" th:tect="${order.user.name}"
-                       class="text-decoration-none">user</a></td>
-                <td><a th:href="@{/order/{id}(id = ${order.id})}" class="text-decoration-none">view</a></td>
+            <tr th:each="user : ${users}"
+                th:classappend="${user.email eq #authentication?.getPrincipal()?.getUsername()} ? bg-success text-white: ''">
+                <td th:text="${user.name}">Name</td>
+                <td th:text="${user.email}">Email ID</td>
+                <td th:text="${user.gender}">Male</td>
+                <td th:text="${user.userRole}">userRole</td>
+                <td th:text="${user.isEnabled}">isEnabled</td>
+                <td><a th:href="@{/user/{id}(id = ${user.id})}" class="text-decoration-none">view</a></td>
+                <td><a th:href="@{/user/edit/{id}(id = ${user.id})}" class="text-decoration-none">edit</a></td>
             </tr>
             </tbody>
             <tfoot>
             <tr>
-                <th>No</th>
-                <th>Bill Amount</th>
-                <th>Date</th>
-                <th>No.Of Items</th>
-                <th>User</th>
+                <th>Name</th>
+                <th>Email ID</th>
+                <th>Gender</th>
+                <th>Role</th>
+                <th>Is Enabled</th>
                 <th>view</th>
+                <th>Edit</th>
             </tr>
             </tfoot>
         </table>

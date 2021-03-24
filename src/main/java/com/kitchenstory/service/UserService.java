@@ -20,6 +20,10 @@ public class UserService {
         return repository.findByEmail(email);
     }
 
+    public Optional<UserEntity> findById(String id) {
+        return repository.findById(id);
+    }
+
     public List<UserEntity> findAll() {
         return repository.findAll();
     }

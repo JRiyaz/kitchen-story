@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <title>Order | Riyaz J</title>
+    <title>User | Riyaz J</title>
 
     <!-- Bootstrap core CSS -->
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.0.0-beta2/css/bootstrap.min.css} "/>
@@ -24,46 +24,69 @@
     <!-- ======= Container Section ======= -->
     <div class="container my-5">
         <div class="w-100 mb-3">
-            <h1>Order Details</h1>
+            <h1>User Details</h1>
         </div>
         <table id="example" class="display w-100">
             <tbody>
             <tr>
-                <th>Id</th>
-                <td th:text="${order.id}">1234</td>
+                <th>User ID</th>
+                <td th:text="${user.id}"></td>
             </tr>
             <tr>
-                <th>User</th>
-                <td><a th:href="@{/user/{id}(id = ${order.user.id}})}" th:tect="${order.user.name}"
-                       class="text-decoration-none">user</a></td>
+                <th>Name</th>
+                <td th:text="${user.name}"></td>
             </tr>
             <tr>
-                <th>Bill Amount</th>
-                <td th:text="${'₹' + order.billAmount}">1234</td>
+                <th>Email</th>
+                <td th:text="${user.email}"></td>
             </tr>
             <tr>
-                <th>Date</th>
-                <td th:text="${#dates.format(order.date, 'dd-MMM-yyyy')}">15-feb-2020</td>
+                <th>Gender</th>
+                <td th:text="${user.gender}"></td>
             </tr>
             <tr>
-                <th>Quantity</th>
-                <td th:text="${order.quantity}">5</td>
+                <th>Address</th>
+                <td th:text="${user.address}"></td>
             </tr>
             <tr>
-                <th>Ordered Using</th>
-                <td th:text="${order.type + ' card'}">Debit</td>
+                <th>City</th>
+                <td th:text="${user.city}"></td>
             </tr>
             <tr>
-                <th>Card Number</th>
-                <td th:text="${order.number}">12545644465</td>
+                <th>State</th>
+                <td th:text="${user.state}"></td>
             </tr>
             <tr>
-                <th>Dishes</th>
+                <th>Zipcode</th>
+                <td th:text="${user.zipcode}"></td>
+            </tr>
+            <tr>
+                <th>User Role</th>
+                <td th:text="${user.userRole}"></td>
+            </tr>
+            <tr>
+                <th>Is Account Non Expired</th>
+                <td th:text="${user.isAccountNonExpired}"></td>
+            </tr>
+            <tr>
+                <th>Is Account Non Locked</th>
+                <td th:text="${user.isAccountNonLocked}"></td>
+            </tr>
+            <tr>
+                <th>Is Credentials Non Expired</th>
+                <td th:text="${user.isCredentialsNonExpired}"></td>
+            </tr>
+            <tr>
+                <th>Is Enabled</th>
+                <td th:text="${user.isEnabled}"></td>
+            </tr>
+            <tr>
+                <th>All Orders</th>
                 <td>
                     <ol type="1">
-                        <li th:each="dish : ${order.dishes}">
-                            <a th:href="@{/dish/{id}(id = ${dish.id})}" class="text-decoration-none"
-                            th:text="${dish.name + ' ' + dish.type + ' ₹' + dish.price + '/-'}">Dish</a>
+                        <li th:each="order, stats : ${user.orders}">
+                            <a th:href="@{/order/{id}(id=${order.id})}"
+                               th:text="${'Order ' + stats.index + 1}"></a>
                         </li>
                     </ol>
                 </td>
