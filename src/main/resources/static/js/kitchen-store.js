@@ -27,22 +27,10 @@ function filterItems() {
   }
 }
 
-function onFormSubmit() {
-
-    const search = document.getElementById("header-search").value;
-
-    const url = [[@{/dish/all/search}]];
-    let response = await fetch(url);
-
-    let dishes = await response.json(); // read response body and parse as JSON
-
-    if (dishes) {
-
-
-    }
-
+function closeResult() {
+    const form_search = document.getElementsByClassName("form-search")[0];
+    form_search.classList.add("d-none");
 }
-
 
 $(document).ready(function () {
   const options = {

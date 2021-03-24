@@ -78,6 +78,10 @@
   cursor: pointer;
 }
 
+.z-index-5000 {
+  z-index: 5000;
+}
+
 .pointer {
   cursor: pointer;
 }
