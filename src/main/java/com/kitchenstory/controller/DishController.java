@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 
 @Controller
 @RequestMapping("/dish")
@@ -35,8 +36,25 @@ public class DishController {
         return "dish";
     }
 
+    @GetMapping("all")
+    public String allDishes(Model model) {
+        final List<DishEntity> dishes = dishService.findAll();
+        model.addAttribute("dishes", dishes);
+        return "dishes";
+    }
+
     @GetMapping("add")
     public String showAddTemplate(DishEntity dishEntity) {
+        return "add-dish";
+    }
+
+    @GetMapping("edit/{id}")
+    public String editDish(@PathVariable String id, Model model) {
+        final DishEntity dish = dishService.findById(id)
+                .orElseThrow(() -> new DishNotFoundException("Dish with id: " + id + " not found."));
+
+        model.addAttribute("dishEntity", dish);
+
         return "add-dish";
     }
 
@@ -54,5 +72,11 @@ public class DishController {
 
         model.addAttribute("dish", dishEntity);
         return "redirect:/?add-dish=true";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteDish(@PathVariable String id) {
+        dishService.deleteById(id);
+        return "redirect:/?delete-dish=true";
     }
 }

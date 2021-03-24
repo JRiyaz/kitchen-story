@@ -62,7 +62,7 @@
                 <td>
                     <ol type="1">
                         <li th:each="dish : ${order.dishes}">
-                            <a th:href="@{/dish/{id}(id = ${dish.id}})}" class="text-decoration-none"
+                            <a th:href="@{/dish/{id}(id = ${dish.id})}" class="text-decoration-none"
                             th:text="${dish.name + ' ' + dish.type + ' ₹' + dish.price + '/-'}">Dish</a>
                         </li>
                     </ol>
