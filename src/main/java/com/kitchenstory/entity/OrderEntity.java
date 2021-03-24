@@ -59,7 +59,7 @@ public class OrderEntity implements Serializable {
     private Date date;
 
     @ToString.Exclude
-    @OneToMany(targetEntity = DishEntity.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = DishEntity.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "order_dishes",
             joinColumns = @JoinColumn(name = "order_id", unique = false),
             inverseJoinColumns = @JoinColumn(name = "dish_id", unique = false))

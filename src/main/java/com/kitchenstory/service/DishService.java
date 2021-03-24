@@ -20,6 +20,10 @@ public class DishService {
         return repository.findAll();
     }
 
+    public List<DishEntity> findByNameContainingIgnoreCase(String name) {
+        return repository.findByNameContainingIgnoreCase(name);
+    }
+
     public Optional<DishEntity> findById(String id) {
         return repository.findById(id);
     }
