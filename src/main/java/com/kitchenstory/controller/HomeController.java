@@ -22,11 +22,21 @@ public class HomeController {
     private final DishService dishService;
 
     @GetMapping
-    public String index(@RequestParam("dish") String dish, Model model) {
+    public String index(Model model) {
         final List<DishEntity> dishes = new ArrayList<>();
-        if (dish != null)
-            dishes.addAll(dishService.findByNameContainingIgnoreCase(dish));
 
+        model.addAttribute("dishes", dishes);
+        return "index";
+    }
+
+    @GetMapping("/home")
+    public String index(@RequestParam("dish") String dish, Model model) {
+
+        final List<DishEntity> dishes = new ArrayList<>();
+        if (dish != null && dish.length() > 2)
+            dishes.addAll(dishService.findByNameContainingIgnoreCase(dish));
+        else
+            return "redirect:/?dish-name=false";
         model.addAttribute("dishes", dishes);
         return "index";
     }
@@ -42,6 +52,11 @@ public class HomeController {
         model.addAttribute("typeCount", typeCount);
 
         return "menu";
+    }
+
+    @GetMapping("login")
+    public String login() {
+        return "sign-in";
     }
 
 }

@@ -49,8 +49,9 @@
                     <div class="form-floating">
                         <select class="form-select" id="dish-type" th:field="*{type}" autofocus required
                                 th:classappend="${#fields.hasErrors('type')} ? 'is-invalid' : ''">
-                            <option value="Biriyani" selected>Biriyani</option>
-                            <option value="Veg-Biriyani">Veg-Biriyani</option>
+                            <option th:each="dish : ${dishTypes}" th:value="${dish}"
+                                    th:text="${dish}"
+                                    th:selected="${dish == dish.type}"></option>
                         </select>
                         <label for="dish-type">Dish Type</label>
                         <div th:if="${#fields.hasErrors('type')}" th:errors="*{type}" class="text-danger">
@@ -63,9 +64,9 @@
                     <div class="form-floating">
                         <select class="form-select" id="spicy" th:field="*{spicy}" autofocus required
                                 th:classappend="${#fields.hasErrors('spicy')} ? 'is-invalid' : ''">
-                            <option value="Normal" selected>Normal</option>
-                            <option value="Spicy">Spicy</option>
-                            <option value="Extra Chilly">Extra Chilly</option>
+                            <option th:each="s : ${spicy}" th:value="${s}"
+                                    th:text="${s}"
+                                    th:selected="${s == s.spicy}"></option>
                         </select>
                         <label for="spicy">Spicy</label>
                         <div th:if="${#fields.hasErrors('spicy')}" th:errors="*{spicy}" class="text-danger">
@@ -107,9 +108,9 @@
                     <div class="form-floating">
                         <select class="form-select" id="chef-special" th:field="*{special}" autofocus required
                                 th:classappend="${#fields.hasErrors('special')} ? 'is-invalid' : ''">
-                            <option value="Normal" selected>Normal</option>
-                            <option value="Special">Special</option>
-                            <option value="Chef Special">Chef Special</option>
+                            <option th:each="s : ${special}" th:value="${s}"
+                                    th:text="${s}"
+                                    th:selected="${s == s.special}"></option>
                         </select>
                         <label for="chef-special">Is Special</label>
                         <div th:if="${#fields.hasErrors('special')}" th:errors="*{special}" class="text-danger">

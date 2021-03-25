@@ -42,9 +42,24 @@ public class ModelData {
         return Arrays.asList("AP", "Karnataka", "TamilNadu", "Kerala");
     }
 
-    @ModelAttribute("types")
+    @ModelAttribute("dishTypes")
     public List<String> dishType() {
-        return Arrays.asList("Veg", "Non-veg");
+        return Arrays.asList("Veg-Starter", "Egg-Starter", "Chicken-Starter",
+                "Mutton-Starter", "Platter-Starter", "Executive-Thali",
+                "Veg-Soup", "Chicken-Soup", "Veg-Main-Course", "Paneer-Main-Course",
+                "Egg-Main-Course", "Chicken-Main-Course", "Mutton-Main-Course",
+                "Dal-Main-Course", "Biriyani-Main-Course", "Rice-Main-Course",
+                "Fried-Rice", "Dessert");
+    }
+
+    @ModelAttribute("spicy")
+    public List<String> spicy() {
+        return Arrays.asList("Normal", "Spicy", "Extra Chilly");
+    }
+
+    @ModelAttribute("special")
+    public List<String> special() {
+        return Arrays.asList("Normal", "Special", "Chef Special");
     }
 
     @ModelAttribute("count")

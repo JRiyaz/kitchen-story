@@ -43,7 +43,7 @@
 
                 <!-- ======= Form Search Section ======= -->
                 <li class="nav-item col-7 align-self-center position-relative">
-                    <form class="row" th:action="@{/}" method="GET">
+                    <form class="row" th:action="@{/home}" method="GET">
                         <div class="col-10 p-0">
                             <input class="form-control rounded-0" type="search"
                                    placeholder="Search for a dish" name="dish" autofocus minlength="3"/>
@@ -57,9 +57,10 @@
                         <div class="col-12 mx-auto mt-3 bg-dark px-3 py-4 rounded form-search-content position-relative">
                             <div class="position-absolute end-0 top-0 bg-danger rounded pointer z-index-5000"
                                  onclick="closeResult()">
-                                <img src="@{/img/x.svg}" id="password-icon" alt="" width="20"/>
+                                <img th:src="@{/img/x.svg}" id="password-icon" alt="" width="20"/>
                             </div>
-                            <div class="text-center" th:if="${#lists.isEmpty(dishes)}">No Dish Found</div>
+                            <div class="text-center text-white" th:if="${#lists.isEmpty(dishes)}"
+                                 th:text="${'No Dish Found with Name: ' + param.dish}">No Dish Found</div>
                             <div class="list-group" th:unless="${#lists.isEmpty(dishes)}">
                                 <a th:href="@{/dish/{id}(id = ${dish.id})}"
                                    class="list-group-item list-group-item-action my-2 rounded"
@@ -92,7 +93,7 @@
                     </a>
                     <ul class="dropdown-menu end-0" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" th:href="@{/login}">Login</a></li>
-                        <li><a class="dropdown-item" th:href="@{/sign-up}">Sign Up</a></li>
+                        <li><a class="dropdown-item" th:href="@{/user/sign-up}">Sign Up</a></li>
                         <li>
                             <hr class="dropdown-divider"/>
                         </li>
