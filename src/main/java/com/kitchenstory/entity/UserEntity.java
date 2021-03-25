@@ -28,12 +28,12 @@ public class UserEntity implements Serializable {
     private String id;
 
     @Column(length = 50)
-    @Size(min = 4, max = 30, message = "Invalid Name")
+    @Size(min = 4, max = 30, message = "{user.name.invalid}")
     @NotEmpty(message = "Please enter name")
     private String name;
 
     @Column(nullable = false, length = 100, unique = true, name = "email")
-    @Email(message = "Invalid Email ID")
+    @Email(message = "{user.email.invalid}")
     @NotEmpty(message = "Please enter email")
     @UniqueEmailId(message = "User with email id already exists")
     private String email;
