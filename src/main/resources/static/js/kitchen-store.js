@@ -6,8 +6,8 @@ function showPassword(currentTag) {
   password.setAttribute("type", type);
   const password_icon = currentTag.firstElementChild;
 
-  if (type === "password") password_icon.src = "@{/img/eye-slash.svg}";
-  else password_icon.src = "@{/img/eye.svg}";
+  if (type === "password") password_icon.src = "../img/eye-slash.svg";
+  else password_icon.src = "../img/eye.svg";
 }
 
 function filterItems() {
