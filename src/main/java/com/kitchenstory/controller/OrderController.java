@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,11 +49,17 @@ public class OrderController {
 
     @GetMapping("all")
     public String all(Model model) {
-        final String email = request.getUserPrincipal().getName();
-        final UserEntity user = userService.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User with Email Id: " + email + " not found."));
+        List<OrderEntity> orders = new ArrayList<>();
+        final boolean is_admin = request.isUserInRole("ROLE_ADMIN");
+        if (is_admin)
+            orders.addAll(orderService.findAll());
+        else {
+            final String email = request.getUserPrincipal().getName();
+            final UserEntity user = userService.findByEmail(email)
+                    .orElseThrow(() -> new UserNotFoundException("User with Email Id: " + email + " not found."));
 
-        final List<OrderEntity> orders = user.getOrders();
+            orders.addAll(user.getOrders());
+        }
         model.addAttribute("orders", orders);
         return "orders";
     }

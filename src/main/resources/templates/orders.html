@@ -41,7 +41,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="order : ${orders}">
+            <tr th:each="order, stats : ${orders}">
+                <td th:text="${stats.index + 1}">1</td>
                 <td th:text="${'₹' + order.billAmount}">₹500</td>
                 <td th:text="${#dates.format(order.date, 'dd-MMM-yyyy')}">15-feb-2020</td>
                 <td th:text="${order.quantity}">Edinburgh</td>

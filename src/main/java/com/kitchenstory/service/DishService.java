@@ -24,6 +24,14 @@ public class DishService {
         return repository.findByNameContainingIgnoreCase(name);
     }
 
+    public List<DishEntity> findTenRandomDishes() {
+        return repository.findTenRandomDishes();
+    }
+
+    public List<DishEntity> findFourRandomDishes() {
+        return repository.findFourRandomDishes();
+    }
+
     public Optional<DishEntity> findById(String id) {
         return repository.findById(id);
     }

@@ -1,3 +1,4 @@
+
 function showPassword(string, element) {
 
 //  const show_password = document.getElementsByClassName("show-password")[0];

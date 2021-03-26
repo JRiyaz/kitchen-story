@@ -50,7 +50,7 @@ public class CartController {
         cart.setDishes(new ArrayList<>(dishes));
         cartService.save(cart);
 
-        return "redirect:/?add-to-cart=true";
+        return "redirect:/menu?add-to-cart=true";
     }
 
     @GetMapping("delete/{id}")
@@ -73,7 +73,7 @@ public class CartController {
         cart.setDishes(dishes);
         cartService.save(cart);
 
-        return "redirect:/?dish-removed=true";
+        return "redirect:/menu?dish-removed=true";
     }
 
 }
