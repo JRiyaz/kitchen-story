@@ -24,22 +24,24 @@
     <!-- ======= Container Section ======= -->
     <div class="container my-5 px-5">
 
-        <h1 class="col-10 ps-4 mx-auto display-6">Add Dish</h1>
+        <h1 class="col-10 ps-4 mx-auto display-6" th:text="${header}">Add Dish</h1>
 
-        <!-- ======= Form Section ======= -->
-        <form th:object="${dishEntity}" method="POST" th:action="@{/dish/add}">
+        <!-- ======= Form Section =======
+              th:action="${dishEntity.id eq null} ? '@{/dish/add}' : '@{/dish/add/{id}(id = ${dishEntity.id})}'"-->
+        <form th:object="${dishEntity}" method="POST"
+              th:action="${dishEntity.id eq null} ? @{/dish/add} : @{/dish/add/{id}(id = ${dishEntity.id})}">
             <div class="row justify-content-center mx-3">
 
                 <div class="col-md-5 my-2">
                     <div class="form-floating">
                         <input type="text" class="form-control" id="dish-name" th:field="*{name}" autofocus required
                                minlength="3" list="dish-names"
-                               th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''">
+                               th:classappend="${#fields.hasErrors('name') or (param.dishName ne null)} ? 'is-invalid' : ''">
                         <label for="dish-name">Dish Name</label>
                         <datalist id="dish-names">
                             <option value="Dum Biriyani">Dum Biriyani</option>
                         </datalist>
-                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">
+                        <div th:if="${#fields.hasErrors('name') or (param.dishName ne null)}" th:errors="*{name}" class="text-danger">
                             Invalid Dish Name.
                         </div>
                     </div>
@@ -51,7 +53,7 @@
                                 th:classappend="${#fields.hasErrors('type')} ? 'is-invalid' : ''">
                             <option th:each="dish : ${dishTypes}" th:value="${dish}"
                                     th:text="${dish}"
-                                    th:selected="${dish == dish.type}"></option>
+                                    th:selected="${dish == dishEntity.type}"></option>
                         </select>
                         <label for="dish-type">Dish Type</label>
                         <div th:if="${#fields.hasErrors('type')}" th:errors="*{type}" class="text-danger">
@@ -66,7 +68,7 @@
                                 th:classappend="${#fields.hasErrors('spicy')} ? 'is-invalid' : ''">
                             <option th:each="s : ${spicy}" th:value="${s}"
                                     th:text="${s}"
-                                    th:selected="${s == s.spicy}"></option>
+                                    th:selected="${s == dishEntity.spicy}"></option>
                         </select>
                         <label for="spicy">Spicy</label>
                         <div th:if="${#fields.hasErrors('spicy')}" th:errors="*{spicy}" class="text-danger">
@@ -110,7 +112,7 @@
                                 th:classappend="${#fields.hasErrors('special')} ? 'is-invalid' : ''">
                             <option th:each="s : ${special}" th:value="${s}"
                                     th:text="${s}"
-                                    th:selected="${s == s.special}"></option>
+                                    th:selected="${s == dishEntity.special}"></option>
                         </select>
                         <label for="chef-special">Is Special</label>
                         <div th:if="${#fields.hasErrors('special')}" th:errors="*{special}" class="text-danger">
@@ -123,9 +125,9 @@
                     <div class="form-floating">
                         <input type="url" class="form-control" id="image-url" th:field="*{url}" autofocus
                                required minlength="3"
-                               th:classappend="${#fields.hasErrors('url')} ? 'is-invalid' : ''">
+                               th:classappend="${#fields.hasErrors('url') or (param.imageUrl ne null)} ? 'is-invalid' : ''">
                         <label for="image-url">Image URL</label>
-                        <div th:if="${#fields.hasErrors('url')}" th:errors="*{url}" class="text-danger">
+                        <div th:if="${#fields.hasErrors('url') or (param.imageUrl ne null)}" th:errors="*{url}" class="text-danger">
                             Invalid Image URL.
                         </div>
                     </div>
@@ -146,7 +148,9 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-success col-6 mx-auto mt-2">Add Dish</button>
+                <button type="submit" class="btn btn-success col-6 mx-auto mt-2"
+                        id="add-dish-button"
+                        onclick="disableButton()">Add Dish</button>
             </div>
         </form>
 

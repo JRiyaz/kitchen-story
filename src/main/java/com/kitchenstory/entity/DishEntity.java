@@ -1,6 +1,5 @@
 package com.kitchenstory.entity;
 
-import com.kitchenstory.validator.UniqueDishName;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -28,7 +27,7 @@ public class DishEntity implements Serializable {
 
     @Column(length = 50, nullable = false, unique = true)
     @NotNull(message = "Dish name cannot be null")
-    @UniqueDishName(message = "Dish name already exists")
+//    @UniqueDishName(message = "Dish name already exists")
     private String name;
 
     @Column(length = 50, nullable = false)

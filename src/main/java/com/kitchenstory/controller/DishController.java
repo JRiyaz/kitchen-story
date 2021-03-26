@@ -9,11 +9,10 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.URL;
@@ -44,7 +43,8 @@ public class DishController {
     }
 
     @GetMapping("add")
-    public String showAddTemplate(DishEntity dishEntity) {
+    public String showAddTemplate(@ModelAttribute("dishEntity") DishEntity dishEntity, Model model) {
+        model.addAttribute("header", "Add Dish");
         return "add-dish";
     }
 
@@ -54,17 +54,28 @@ public class DishController {
                 .orElseThrow(() -> new DishNotFoundException("Dish with id: " + id + " not found."));
 
         model.addAttribute("dishEntity", dish);
-
+        model.addAttribute("header", "Update Dish");
         return "add-dish";
     }
 
     @PostMapping("add")
-    public String addDish(@Valid final DishEntity dish, BindingResult result, Model model) throws IOException {
+    public String addDish(@Valid final DishEntity dish, BindingResult result, Model model,
+                          RedirectAttributes attributes) throws IOException {
 
         if (result.hasErrors())
             return "add-dish";
+        if (dishService.findByName(dish.getName()).isPresent()) {
+            attributes.addFlashAttribute("dishEntity", dish);
+            return "redirect:/dish/add?dishName=error";
+        }
 
-        final byte[] image = IOUtils.toByteArray(new URL(dish.getUrl()));
+        byte[] image = null;
+        try {
+            image = IOUtils.toByteArray(new URL(dish.getUrl()));
+        } catch (Exception e) {
+            attributes.addFlashAttribute("dishEntity", dish);
+            return "redirect:/dish/add?imageUrl=error";
+        }
         final ImageEntity file = new ImageEntity(image);
         dish.setImage(file);
 
@@ -72,6 +83,40 @@ public class DishController {
 
         model.addAttribute("dish", dishEntity);
         return "redirect:/?add-dish=true";
+    }
+
+    @PostMapping("add/{id}")
+    public String updateDish(@PathVariable String id, @Valid final DishEntity dish, BindingResult result, Model model,
+                             RedirectAttributes attributes, HttpServletRequest request) throws IOException {
+
+        final DishEntity dishEntity = dishService.findById(id)
+                .orElseThrow(() -> new DishNotFoundException("Dish with id: " + id + " not found."));
+
+        if (result.hasErrors())
+            return "add-dish";
+
+        byte[] image = null;
+        try {
+            image = IOUtils.toByteArray(new URL(dish.getUrl()));
+        } catch (Exception e) {
+            attributes.addFlashAttribute("dishEntity", dish);
+            return "redirect:/dish/edit/" + id + "?imageUrl=error";
+        }
+        final ImageEntity file = new ImageEntity(image);
+
+        dishEntity.setImage(file);
+        dishEntity.setName(dish.getName());
+        dishEntity.setPrice(dish.getPrice());
+        dishEntity.setRating(dish.getRating());
+        dishEntity.setSpecial(dish.getSpecial());
+        dishEntity.setSpicy(dish.getSpicy());
+        dishEntity.setDescription(dish.getDescription());
+        dishEntity.setType(dish.getType());
+        dishEntity.setUrl(dish.getUrl());
+
+        final DishEntity entity = dishService.save(dishEntity);
+        model.addAttribute("dish", entity);
+        return "redirect:/?update-dish=true";
     }
 
     @GetMapping("/delete/{id}")

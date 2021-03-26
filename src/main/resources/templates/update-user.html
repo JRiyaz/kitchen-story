@@ -93,7 +93,7 @@
                     <th>Gender</th>
                     <td>
                         <select
-                                class="custom-select"
+                                class="form-select"
                                 id="gender"
                                 th:field="*{gender}"
                                 th:classappend="${#fields.hasErrors('gender')} ? 'is-invalid' : ''"
@@ -115,29 +115,30 @@
                 </tr>
 
                 <!--                    Password field-->
-                <tr>
-                    <th>Password</th>
-                    <td>
-                        <input
-                                type="text"
-                                class="form-control"
-                                id="password"
-                                th:field="*{password}"
-                                placeholder="Your Password"
-                                required
-                                autofocus
-                                th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''"
-                                minlength="4"
-                        />
-                        <div
-                                th:if="${#fields.hasErrors('password')}"
-                                th:errors="*{password}"
-                                class="text-danger"
-                        >
-                            Please create a strong password.
-                        </div>
-                    </td>
-                </tr>
+                <!--        <tr>
+                            <th>Password</th>
+                            <td>
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        id="password"
+                                        th:field="*{password}"
+                                        th:value="${param.user}"
+                                        placeholder="Your Password"
+                                        required
+                                        autofocus
+                                        th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''"
+                                        minlength="4"
+                                />
+                                <div
+                                        th:if="${#fields.hasErrors('password')}"
+                                        th:errors="*{password}"
+                                        class="text-danger"
+                                >
+                                    Please create a strong password.
+                                </div>
+                            </td>
+                        </tr>-->
 
                 <!--                    Address field-->
                 <tr>
@@ -194,7 +195,7 @@
                     <th>State</th>
                     <td>
                         <input
-                                class="custom-select"
+                                class="form-control"
                                 id="state"
                                 th:field="*{state}"
                                 th:classappend="${#fields.hasErrors('state')} ? 'is-invalid' : ''"
@@ -403,7 +404,7 @@
                 <tr>
                     <th>Update</th>
                     <th>
-                        <button type="submit" class="btn btn-info btn-sm btn-block">Update</button>
+                        <button type="submit" class="btn btn-info btn-sm btn-block w-100">Update</button>
                     </th>
                 </tr>
                 </tfoot>
@@ -435,6 +436,7 @@
    $(document).ready(function () {
      $("#example").DataTable();
    });
+
 </script>
 </body>
 

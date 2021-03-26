@@ -48,7 +48,7 @@
                 <td th:text="${dish.name}">Name</td>
                 <td>
                     <img
-                            style="width: 160px; height: 120px; max-width: 160px; max-height: 120px;"
+                            style="width: 160px; height: 100px; max-width: 160px; max-height: 100px;"
                             th:src="@{'data:image/jpeg;base64,' + ${dish.image.bytesToImageConverter(dish.image.image)}}"
                             th:alt="${dish.name}"
                             class="card-img-top img-fluid border border-success"

@@ -43,14 +43,17 @@
             </thead>
             <tbody>
             <tr th:each="user : ${users}"
-                th:classappend="${user.email eq #authentication?.getPrincipal()?.getUsername()} ? bg-success text-white: ''">
-                <td th:text="${user.name}">Name</td>
+                th:with="own = ${#authentication.getPrincipal().getUsername() eq user.email}"
+                th:classappend="${own} ? 'bg-success text-white' : ''">
+                <td th:text="${user.name}" th:classappend="${own} ? 'bg-success text-white' : ''">Name</td>
                 <td th:text="${user.email}">Email ID</td>
                 <td th:text="${user.gender}">Male</td>
                 <td th:text="${user.userRole}">userRole</td>
                 <td th:text="${user.isEnabled}">isEnabled</td>
-                <td><a th:href="@{/user/{id}(id = ${user.id})}" class="text-decoration-none">view</a></td>
-                <td><a th:href="@{/user/edit/{id}(id = ${user.id})}" class="text-decoration-none">edit</a></td>
+                <td><a th:href="@{/user/{id}(id = ${user.id})}" class="text-decoration-none"
+                       th:classappend="${own} ? 'bg-success text-white' : ''">view</a></td>
+                <td><a th:href="@{/user/edit/{id}(id = ${user.id})}" class="text-decoration-none"
+                       th:classappend="${own} ? 'bg-success text-white' : ''">edit</a></td>
             </tr>
             </tbody>
             <tfoot>

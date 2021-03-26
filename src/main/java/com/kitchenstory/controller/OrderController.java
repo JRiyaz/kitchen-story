@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
@@ -30,6 +31,7 @@ public class OrderController {
     private final CartService cartService;
     private final UserService userService;
     private final OrderService orderService;
+    private final HttpServletRequest request;
 
     @GetMapping("{id}")
     public String one(@PathVariable String id, Model model) {
@@ -46,8 +48,9 @@ public class OrderController {
 
     @GetMapping("all")
     public String all(Model model) {
-        final UserEntity user = userService.findByEmail("j.riyazu@gmail.com")
-                .orElseThrow(() -> new UserNotFoundException("User with Email Id: j.riyazu@gmail.com not found."));
+        final String email = request.getUserPrincipal().getName();
+        final UserEntity user = userService.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User with Email Id: " + email + " not found."));
 
         final List<OrderEntity> orders = user.getOrders();
         model.addAttribute("orders", orders);
@@ -61,8 +64,9 @@ public class OrderController {
         if (result.hasErrors())
             return "payment";
 
-        final UserEntity user = userService.findByEmail("j.riyazu@gmail.com")
-                .orElseThrow(() -> new UserNotFoundException("User with Email Id: j.riyazu@gmail.com not found."));
+        final String email = request.getUserPrincipal().getName();
+        final UserEntity user = userService.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User with Email Id: " + email + " not found."));
 
         final CartEntity cart = user.getCart();
 

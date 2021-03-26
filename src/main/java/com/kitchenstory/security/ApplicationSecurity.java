@@ -27,7 +27,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .anyRequest()
-                .authenticated()
+                .permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login")

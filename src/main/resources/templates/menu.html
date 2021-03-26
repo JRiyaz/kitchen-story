@@ -24,7 +24,8 @@
     <!-- ======= Container Section ======= -->
     <div class="container my-5">
         <!-- ======= List-Group Section ======= -->
-        <div class="row my-3">
+        <h1 class="text-danger text-center" th:if="${#lists.isEmpty(dishes)}"></h1>
+        <div class="row my-3" th:unless="${#lists.isEmpty(dishes)}">
             <div id="list-example" class="list-group col-3">
                 <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center mb-1"
                    th:each="type : ${typeCount}" th:href="${'#' + type.key}">[[${type.key}]]
@@ -41,7 +42,8 @@
                 <div class="list-group px-2" id="menu">
                     <div class="list-group-item list-group-item-action my-2 border-0 bg-none row"
                          th:each="types : ${typeCount}" th:id="${types.key}">
-                        <a th:href="@{/dish/{id}(id = ${dish.id})}" class="text-decoration-none d-flex w-100 my-2 item"
+                        <h4 class="fw-bold lead text-center" th:text="${types.key}">veg</h4>
+                        <a th:href="@{/dish/{id}(id = ${dish.id})}" class="text-decoration-none d-flex w-100 my-3 item"
                            th:each="dish : ${dishes}" th:if="${dish.type eq types.key}">
                             <img class="img-fluid rounded" th:alt="${dish.name}"
                                  th:src="@{'data:image/png;base64,' + ${dish.image.bytesToImageConverter(dish.image.image)}}"

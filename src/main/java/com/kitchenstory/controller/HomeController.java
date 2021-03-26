@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -55,8 +56,17 @@ public class HomeController {
     }
 
     @GetMapping("login")
-    public String login() {
-        return "sign-in";
+    public String login(Principal principal) {
+        String user = null;
+        try {
+            user = principal.getName();
+        } catch (Exception e) {
+            user = null;
+        }
+        if (user == null)
+            return "sign-in";
+        else
+            return "redirect:/?user-exists=true";
     }
 
 }

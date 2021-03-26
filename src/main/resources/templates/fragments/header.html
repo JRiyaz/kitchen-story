@@ -101,6 +101,7 @@
                         <li><a class="dropdown-item" th:href="@{/order/cart}">View Cart</a></li>
                         <li><a class="dropdown-item" th:href="@{/order/all}">All Orders</a></li>
                         <li><a class="dropdown-item" th:href="@{/user/all}">All Users</a></li>
+                        <li><a class="dropdown-item" th:href="@{/dish/all}">All Dishes</a></li>
                         <li>
                             <hr class="dropdown-divider"/>
                         </li>
@@ -131,8 +132,8 @@
                             <input type="email" class="form-control is-invalid" id="email"
                                    placeholder="name@example.com" required
                                    minlength="4"/>
-                            <div class="position-absolute show-password" onclick="showPassword(this)">
-                                <img src="../static/img/eye-slash.svg" alt="" width="20"/>
+                            <div class="position-absolute show-password" onclick="showPassword('hello', this)">
+                                <img th:src="@{/img/eye-slash.svg}" alt="" width="20"/>
                                 <!-- <i class="eye-slash"></i> -->
                             </div>
                             <label for="email">Email address</label>
@@ -141,8 +142,8 @@
                             <input type="password" class="form-control is-valid" id="password" placeholder="Password"
                                    required
                                    minlength="4"/>
-                            <div class="position-absolute show-password" onclick="showPassword(this)">
-                                <img src="../static/img/eye-slash.svg" alt="" width="20"/>
+                            <div class="position-absolute show-password" onclick="showPassword('hello', this)">
+                                <img th:src="@{/img/eye-slash.svg}" alt="" width="20"/>
                                 <!-- <i class="eye-slash"></i> -->
                             </div>
                             <label for="password">Password</label>

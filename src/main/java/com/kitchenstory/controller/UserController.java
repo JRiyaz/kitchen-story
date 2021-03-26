@@ -5,14 +5,14 @@ import com.kitchenstory.exceptions.UserNotFoundException;
 import com.kitchenstory.model.UserRole;
 import com.kitchenstory.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -20,20 +20,35 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final HttpServletRequest request;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("{id}")
     public String user(@PathVariable String id, Model model) {
+
         final UserEntity user = userService.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User with Id: " + id + " not found"));
+        final String email = request.getUserPrincipal().getName();
+
+        if (!email.equals(user.getEmail()))
+            return "redirect:/?user-unauthorized=true";
+
         model.addAttribute("user", user);
         return "user";
     }
 
     @GetMapping("all")
     public String allUsers(Model model) {
-        final List<UserEntity> users = new ArrayList<>();
-        users.addAll(userService.findAll());
-        model.addAttribute("users", users);
+        final boolean is_admin = request.isUserInRole("ROLE_ADMIN");
+        if (is_admin)
+            model.addAttribute("users", userService.findAll());
+        else {
+            final String email = request.getUserPrincipal().getName();
+            final UserEntity user = userService.findByEmail(email)
+                    .orElseThrow(() -> new UserNotFoundException("User with Email Id: " + email + " not found."));
+            model.addAttribute("user", user);
+            return "user";
+        }
         return "users";
     }
 
@@ -46,12 +61,27 @@ public class UserController {
     }
 
     @PostMapping("update/{id}")
-    public String updateUser(@Valid @ModelAttribute("user") UserEntity userEntity, @PathVariable String id, BindingResult bindingResult) {
+    public String updateUser(@Valid @ModelAttribute("user") UserEntity userEntity,
+                             @PathVariable String id, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors())
             return "update-user";
-        userEntity.setId(id);
-//        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+        final UserEntity user = userService.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User with Id: " + id + " not found"));
+
+        user.setEmail(userEntity.getEmail())
+                .setName(userEntity.getName())
+                .setGender(userEntity.getGender())
+                .setAddress(userEntity.getAddress())
+                .setCity(userEntity.getCity())
+                .setState(userEntity.getState())
+                .setZipcode(userEntity.getZipcode())
+                .setTerms(userEntity.getTerms())
+                .setAccountNonExpired(userEntity.getIsAccountNonExpired())
+                .setCredentialsNonExpired(userEntity.getIsCredentialsNonExpired())
+                .setAccountNonLocked(userEntity.getIsAccountNonLocked())
+                .setEnabled(userEntity.getIsEnabled());
+
         userService.save(userEntity);
         return "redirect:/user/all?update-user=true";
     }
@@ -76,7 +106,7 @@ public class UserController {
         } else
             userEntity.setUserRole(UserRole.ROLE_USER);
 
-//        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
         userService.save(userEntity);
         return "redirect:/?sign-up=true";
     }

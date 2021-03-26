@@ -29,7 +29,7 @@
                     <span class="text-muted ps-1">Your cart</span>
                     <span class="badge bg-success rounded-pill" th:text="${count}">3</span>
                 </h4>
-                <h3 class="text-warning" th:unless="${count > 0}">Your cart is empty</h3>
+                <h3 class="text-danger text-center" th:unless="${count > 0}">Your cart is empty</h3>
                 <ul class="list-group mb-3" th:if="${count > 0}">
                     <li class="list-group-item d-flex justify-content-between lh-sm position-relative cart-item"
                         th:each="dish : ${dishes}">
