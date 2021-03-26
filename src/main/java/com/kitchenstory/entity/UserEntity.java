@@ -35,7 +35,7 @@ public class UserEntity implements Serializable {
     @Column(nullable = false, length = 100, unique = true, name = "email")
     @Email(message = "{user.email.invalid}")
     @NotEmpty(message = "Please enter email")
-    @UniqueEmailId(message = "User with email id already exists")
+//    @UniqueEmailId(message = "User with email id already exists")
     private String email;
 
     @Column(length = 10)

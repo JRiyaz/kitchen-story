@@ -56,7 +56,7 @@
                     <div class="form-search position-absolute w-100 start-0" th:if="${param.dish}">
                         <div class="col-12 mx-auto mt-3 bg-dark px-3 py-4 rounded form-search-content position-relative">
                             <div class="position-absolute end-0 top-0 bg-danger rounded pointer z-index-5000"
-                                 onclick="closeResult()">
+                                 id="close-search" onclick="closeResult()">
                                 <img th:src="@{/img/x.svg}" id="password-icon" alt="" width="20"/>
                             </div>
                             <div class="text-center text-white" th:if="${#lists.isEmpty(dishes)}"
@@ -127,26 +127,28 @@
                 </div>
                 <div class="modal-body">
                     <p class="text-center">Enter you new password.</p>
-                    <form class="form-floating">
+                    <form class="form-floating" th:onsubmit="return changePassword()" id="changePasswordForm"
+                    th:action="@{/user/change-password}" method="POST">
                         <div class="form-floating mb-3 position-relative">
-                            <input type="email" class="form-control is-invalid" id="email"
-                                   placeholder="name@example.com" required
+                            <input type="password" class="form-control is-invalid" id="password"
+                                   placeholder="New Password" required name="password"
                                    minlength="4"/>
-                            <div class="position-absolute show-password" onclick="showPassword('hello', this)">
+                            <div class="position-absolute show-password" th:onclick="showPassword(this)">
                                 <img th:src="@{/img/eye-slash.svg}" alt="" width="20"/>
                                 <!-- <i class="eye-slash"></i> -->
                             </div>
-                            <label for="email">Email address</label>
+                            <label for="password">New Password</label>
                         </div>
                         <div class="form-floating mb-3 position-relative">
-                            <input type="password" class="form-control is-valid" id="password" placeholder="Password"
+                            <input type="password" class="form-control is-valid" id="confirm-password"
+                                   placeholder="Conform New Password" name="confirmPassword"
                                    required
                                    minlength="4"/>
-                            <div class="position-absolute show-password" onclick="showPassword('hello', this)">
+                            <div class="position-absolute show-password" th:onclick="showPassword(this)">
                                 <img th:src="@{/img/eye-slash.svg}" alt="" width="20"/>
                                 <!-- <i class="eye-slash"></i> -->
                             </div>
-                            <label for="password">Password</label>
+                            <label for="confirm-password">Confirm New Password</label>
                         </div>
                         <button type="submit" class="btn btn-success">
                             Change Password

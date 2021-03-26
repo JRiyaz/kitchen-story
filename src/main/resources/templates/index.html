@@ -36,6 +36,7 @@
     <div class="container">
         <!-- ======= Card Section ======= -->
         <div class="row mb-5">
+            <h3 class="mb-4 text-info">Dish Recommendation</h3>
             <div class="card col mx-2 p-0 scale" th:each="dish : ${fourRandomDishes}">
                 <a th:href="@{/dish/{id}(id = ${dish.id})}" class="d-block text-decoration-none text-dark">
                     <img th:alt="${dish.name}"

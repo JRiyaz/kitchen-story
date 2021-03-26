@@ -110,4 +110,17 @@ public class UserController {
         userService.save(userEntity);
         return "redirect:/?sign-up=true";
     }
+
+    @PostMapping("/change-password")
+    public String changePassword(@RequestParam String password, @RequestParam String confirmPassword) {
+        System.out.println(password + " " + confirmPassword);
+        if (!password.equals(confirmPassword))
+            return "redirect:/?password-not-matching=true";
+        final String email = request.getUserPrincipal().getName();
+        final UserEntity user = userService.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User with Email Id: " + email + " not found."));
+        user.setPassword(passwordEncoder.encode(password));
+        userService.save(user);
+        return "redirect:/?change-password=true";
+    }
 }

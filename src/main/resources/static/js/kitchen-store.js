@@ -1,17 +1,16 @@
 
-function showPassword(string, element) {
+function showPassword(element) {
 
 //  const show_password = document.getElementsByClassName("show-password")[0];
-    console.log(string);
   const password = element.previousElementSibling;
   // toggle the type attribute
   const type =
     password.getAttribute("type") === "password" ? "text" : "password";
   password.setAttribute("type", type);
-  const password_icon = element.firstElementChild;
+//  const password_icon = element.firstElementChild;
 
-  if (type === "password") password_icon.src = [[@{/img/eye-slash.svg}]];
-  else password_icon.src = [[@{/img/eye.svg}]];
+//  if (type === "password") password_icon.src = /*[[@{/img/eye-slash.svg}]]*/;
+//  else password_icon.src = /*[[@{/img/eye.svg}]]*/;
 }
 
 function filterItems() {
@@ -34,6 +33,23 @@ function filterItems() {
 function closeResult() {
     const form_search = document.getElementsByClassName("form-search")[0];
     form_search.classList.add("d-none");
+}
+
+//document.getElementById("close-search").addEventListener("click", () => {
+//    const form_search = document.getElementsByClassName("form-search")[0];
+//    form_search.classList.add("d-none");
+//});
+
+function changePassword() {
+//    event.preventDefault();
+    let passwordForm = document.forms.changePasswordForm;
+    let formData = new FormData(passwordForm);
+    const password = formData.get('password');
+    const confirmPassword = formData.get('confirmPassword');
+    if (password == confirmPassword)
+        return true;
+    else
+        return false;
 }
 
 $(document).ready(function () {
