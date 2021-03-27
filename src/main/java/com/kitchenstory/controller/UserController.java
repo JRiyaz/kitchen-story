@@ -163,6 +163,6 @@ public class UserController {
             return "redirect:/user/forgot-password?emailNotMatching=true";
         user.get().setPassword(passwordEncoder.encode(password));
         userService.save(user.get());
-        return "redirect:/?change-password=true";
+        return "redirect:/?password-reset=true";
     }
 }
