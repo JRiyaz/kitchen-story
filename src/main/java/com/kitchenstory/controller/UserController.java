@@ -10,9 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
@@ -31,7 +34,8 @@ public class UserController {
         final String email = request.getUserPrincipal().getName();
 
         if (!email.equals(user.getEmail()))
-            return "redirect:/?user-unauthorized=true";
+            if (!request.isUserInRole("ROLE_ADMIN"))
+                return "redirect:/?user-unauthorized=true";
 
         model.addAttribute("user", user);
         return "user";
@@ -80,33 +84,47 @@ public class UserController {
                 .setAccountNonExpired(userEntity.getIsAccountNonExpired())
                 .setCredentialsNonExpired(userEntity.getIsCredentialsNonExpired())
                 .setAccountNonLocked(userEntity.getIsAccountNonLocked())
-                .setEnabled(userEntity.getIsEnabled());
+                .setEnabled(userEntity.getIsEnabled())
+                .setPassword(userEntity.getPassword());
 
-        userService.save(userEntity);
+        userService.save(user);
         return "redirect:/user/all?update-user=true";
     }
 
     @GetMapping("sign-up")
-    public String signUp(Model model) {
-        model.addAttribute("userEntity", new UserEntity());
-        return "sign-up";
+    public String signUp(@ModelAttribute("userEntity") UserEntity userEntity, Model model) {
+        String user = null;
+        try {
+            user = request.getUserPrincipal().getName();
+        } catch (Exception e) {
+            user = null;
+        }
+        if (user == null)
+            return "sign-up";
+        else
+            return "redirect:/?user-exists=true";
     }
 
     @PostMapping("sign-up")
-    public String signUp(@Valid UserEntity userEntity, BindingResult result) {
+    public String signUp(@Valid UserEntity userEntity, BindingResult result, RedirectAttributes attributes) {
+
         if (result.hasErrors())
             return "sign-up";
+        if (userService.findByEmail(userEntity.getEmail()).isPresent()) {
+            attributes.addFlashAttribute("userEntity", userEntity);
+            return "redirect:/user/sign-up?emailIdExists=true";
+        }
 
-        if (userEntity.getEmail().equals("j.riyazu@gmail.com")) {
+        if (userEntity.getEmail().equals("j.riyazu@gmail.com"))
             userEntity.setUserRole(UserRole.ROLE_ADMIN);
-            userEntity.setIsAccountNonExpired(true);
-            userEntity.setIsAccountNonLocked(true);
-            userEntity.setIsCredentialsNonExpired(true);
-            userEntity.setIsEnabled(true);
-        } else
+        else
             userEntity.setUserRole(UserRole.ROLE_USER);
 
-        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+        userEntity.setAccountNonExpired(true)
+                .setAccountNonLocked(true)
+                .setCredentialsNonExpired(true)
+                .setEnabled(true)
+                .setPassword(passwordEncoder.encode(userEntity.getPassword()));
         userService.save(userEntity);
         return "redirect:/?sign-up=true";
     }
@@ -121,6 +139,30 @@ public class UserController {
                 .orElseThrow(() -> new UserNotFoundException("User with Email Id: " + email + " not found."));
         user.setPassword(passwordEncoder.encode(password));
         userService.save(user);
+        return "redirect:/?change-password=true";
+    }
+
+    @GetMapping("forgot-password")
+    public String forgotPassword() {
+        String user = null;
+        try {
+            user = request.getUserPrincipal().getName();
+        } catch (Exception e) {
+            user = null;
+        }
+        if (user == null)
+            return "forgot-password";
+        else
+            return "redirect:/?user-exists=true";
+    }
+
+    @PostMapping("forgot-password")
+    public String forgotPassword(@RequestParam String email, @RequestParam String password) {
+        final Optional<UserEntity> user = userService.findByEmail(email);
+        if (!user.isPresent())
+            return "redirect:/user/forgot-password?emailNotMatching=true";
+        user.get().setPassword(passwordEncoder.encode(password));
+        userService.save(user.get());
         return "redirect:/?change-password=true";
     }
 }

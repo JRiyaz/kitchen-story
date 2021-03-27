@@ -46,7 +46,7 @@
                 <td th:text="${'₹' + order.billAmount}">₹500</td>
                 <td th:text="${#dates.format(order.date, 'dd-MMM-yyyy')}">15-feb-2020</td>
                 <td th:text="${order.quantity}">Edinburgh</td>
-                <td><a th:href="@{/user/{id}(id = ${order.user.id})}" th:tect="${order.user.name}"
+                <td><a th:href="@{/user/{id}(id = ${order.user.id})}" th:text="${order.user.name}"
                        class="text-decoration-none">user</a></td>
                 <td><a th:href="@{/order/{id}(id = ${order.id})}" class="text-decoration-none">view</a></td>
             </tr>

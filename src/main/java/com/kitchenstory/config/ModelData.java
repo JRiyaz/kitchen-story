@@ -93,8 +93,9 @@ public class ModelData {
             final List<DishEntity> dishes = new ArrayList<>();
 
             try {
-                final UserEntity user = userService.findByEmail("j.riyazu@gmail.com")
-                        .orElseThrow(() -> new UserNotFoundException("User with Email Id: j.riyazu@gmail.com not found."));
+                final String email = request.getUserPrincipal().getName();
+                final UserEntity user = userService.findByEmail(email)
+                        .orElseThrow(() -> new UserNotFoundException("User with Email Id: " + email + " not found."));
 
                 final Optional<CartEntity> cart = Optional.of(user.getCart());
 

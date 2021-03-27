@@ -115,30 +115,30 @@
                 </tr>
 
                 <!--                    Password field-->
-                <!--        <tr>
-                            <th>Password</th>
-                            <td>
-                                <input
-                                        type="text"
-                                        class="form-control"
-                                        id="password"
-                                        th:field="*{password}"
-                                        th:value="${param.user}"
-                                        placeholder="Your Password"
-                                        required
-                                        autofocus
-                                        th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''"
-                                        minlength="4"
-                                />
-                                <div
-                                        th:if="${#fields.hasErrors('password')}"
-                                        th:errors="*{password}"
-                                        class="text-danger"
-                                >
-                                    Please create a strong password.
-                                </div>
-                            </td>
-                        </tr>-->
+                <tr class="d-none">
+                    <th>Password</th>
+                    <td>
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="password"
+                                th:field="*{password}"
+                                th:value="${param.user}"
+                                placeholder="Your Password"
+                                required
+                                autofocus
+                                th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''"
+                                minlength="4"
+                        />
+                        <div
+                                th:if="${#fields.hasErrors('password')}"
+                                th:errors="*{password}"
+                                class="text-danger"
+                        >
+                            Please create a strong password.
+                        </div>
+                    </td>
+                </tr>
 
                 <!--                    Address field-->
                 <tr>
@@ -436,6 +436,7 @@
    $(document).ready(function () {
      $("#example").DataTable();
    });
+
 
 </script>
 </body>

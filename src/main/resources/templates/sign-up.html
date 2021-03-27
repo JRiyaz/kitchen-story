@@ -76,7 +76,7 @@
                                 id="email-id"
                                 th:field="*{email}"
                                 placeholder="j.riyazu@gmail.com"
-                                th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
+                                th:classappend="${#fields.hasErrors('email') or (param.emailIdExists ne null)} ? 'is-invalid' : ''"
                                 required
                                 autofocus
                                 minlength="6"
@@ -89,6 +89,7 @@
                         >
                             Please provide valid Email ID.
                         </div>
+                        <div class="text-danger" th:if="${param.emailIdExists ne null}">Email ID already exists</div>
                     </div>
                 </div>
                 <div class="d-flex mb-3">
@@ -125,7 +126,7 @@
                                 autofocus
                                 minlength="4"
                         />
-                        <div class="position-absolute show-password" onclick="showPassword('hello', this)" style="top: 30%">
+                        <div class="position-absolute show-password" th:onclick="showPassword(this)" style="top: 30%">
                             <img th:src="@{/img/eye-slash.svg}" alt="" width="20"/>
                         </div>
                         <label for="password">Password</label>

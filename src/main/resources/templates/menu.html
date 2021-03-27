@@ -36,7 +36,7 @@
                  class="scrollspy-example col p-3 border border-dark rounded" tabindex="0">
                 <form class="col-6 position-relative my-4 mx-auto shadow-sm">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
-                           id="search"/>
+                           id="search" th:onkeyup="filterItems()"/>
                 </form>
 
                 <div class="list-group px-2" id="menu">
@@ -44,7 +44,7 @@
                          th:each="types : ${typeCount}" th:id="${types.key}">
                         <h4 class="fw-bold lead text-center" th:text="${types.key}">veg</h4>
                         <a th:href="@{/dish/{id}(id = ${dish.id})}"
-                           class="text-decoration-none d-flex w-100 my-2 item py-2 border border-2 border-dark rounded"
+                           class="text-decoration-none d-flex w-100 my-3 item"
                            th:each="dish : ${dishes}" th:if="${dish.type eq types.key}">
                             <img class="img-fluid rounded" th:alt="${dish.name}"
                                  th:src="@{'data:image/png;base64,' + ${dish.image.bytesToImageConverter(dish.image.image)}}"

@@ -20,7 +20,7 @@ function filterItems() {
 
   for (let i = 0; i < items.length; i++) {
     let item = items[i].getElementsByTagName("h3")[0].innerHTML.toUpperCase();
-    if (item.includes(search) || search.includes(item)) {
+    if (item.includes(search)) {
       items[i].classList.add("d-flex");
       items[i].classList.remove("d-none");
     } else {

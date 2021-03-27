@@ -41,9 +41,10 @@
                         <datalist id="dish-names">
                             <option value="Dum Biriyani">Dum Biriyani</option>
                         </datalist>
-                        <div th:if="${#fields.hasErrors('name') or (param.dishName ne null)}" th:errors="*{name}" class="text-danger">
+                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">
                             Invalid Dish Name.
                         </div>
+                        <div class="text-danger" th:if="${param.dishName ne null}">Dish Name already exists</div>
                     </div>
                 </div>
 
@@ -127,9 +128,10 @@
                                required minlength="3"
                                th:classappend="${#fields.hasErrors('url') or (param.imageUrl ne null)} ? 'is-invalid' : ''">
                         <label for="image-url">Image URL</label>
-                        <div th:if="${#fields.hasErrors('url') or (param.imageUrl ne null)}" th:errors="*{url}" class="text-danger">
+                        <div th:if="${#fields.hasErrors('url')}" th:errors="*{url}" class="text-danger">
                             Invalid Image URL.
                         </div>
+                        <div class="text-danger" th:if="${param.imageUrl ne null}">Error while fetching image</div>
                     </div>
                 </div>
 

@@ -11,15 +11,15 @@
         <nav class="nav nav-masthead justify-content-center float-md-end">
             <a class="nav-link" aria-current="page" th:href="@{/}">Home</a>
             <a class="nav-link" th:href="@{/login}"
-               th:classappend="${#strings.containsIgnoreCase(#httpServletRequest.requestURI, '/login')} ? 'active' : 'null'">
+               th:classappend="${#strings.containsIgnoreCase(#httpServletRequest.requestURI, '/login')} ? 'active' : ''">
                 Sign In
             </a>
             <a class="nav-link" th:href="@{/user/sign-up}"
-               th:classappend="${#strings.containsIgnoreCase(#httpServletRequest.requestURI, '/user/sign-up')} ? 'active' : 'null'">
+               th:classappend="${#strings.containsIgnoreCase(#httpServletRequest.requestURI, '/user/sign-up')} ? 'active' : ''">
                 Sign Up
             </a>
             <a class="nav-link" th:href="@{/user/forgot-password}"
-               th:classappend="${#strings.containsIgnoreCase(#httpServletRequest.requestURI, '/user/forgot-password')} ? 'active' : 'null'">
+               th:classappend="${#strings.containsIgnoreCase(#httpServletRequest.requestURI, '/user/forgot-password')} ? 'active' : ''">
                 Forgot Password
             </a>
         </nav>
