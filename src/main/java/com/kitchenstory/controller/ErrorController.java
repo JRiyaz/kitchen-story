@@ -4,6 +4,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
 
 public class ErrorController implements org.springframework.boot.web.servlet.error.ErrorController {
     @Override
@@ -17,11 +18,7 @@ public class ErrorController implements org.springframework.boot.web.servlet.err
 
         String error = null;
 
-        final String referer = request.getHeader("Referer");
-
-        String path = request.getContextPath();
-
-        Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
+         final int statusCode = (int) request.getAttribute("javax.servlet.error.status_code");
 
         switch (statusCode) {
 
@@ -43,8 +40,6 @@ public class ErrorController implements org.springframework.boot.web.servlet.err
 
         model.addAttribute("statusCode", statusCode);
         model.addAttribute("error", error);
-        model.addAttribute("path", path);
-        model.addAttribute("referer", referer);
 
         // display generic error
         return "error";

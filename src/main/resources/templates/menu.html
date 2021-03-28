@@ -42,7 +42,7 @@
                 <div class="list-group px-2" id="menu">
                     <div class="list-group-item list-group-item-action my-2 border-0 bg-none row"
                          th:each="types : ${typeCount}" th:id="${types.key}">
-                        <h4 class="fw-bold lead text-center" th:text="${types.key}">veg</h4>
+                        <h3 class="fw-bold lead text-center" th:text="${types.key}">veg</h3>
                         <a th:href="@{/dish/{id}(id = ${dish.id})}"
                            class="text-decoration-none d-flex w-100 my-3 item"
                            th:each="dish : ${dishes}" th:if="${dish.type eq types.key}">

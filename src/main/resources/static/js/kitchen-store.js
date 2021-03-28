@@ -17,7 +17,7 @@ function filterItems() {
   const items = menu.getElementsByClassName("item");
 
   for (let i = 0; i < items.length; i++) {
-    let item = items[i].getElementsByTagName("h3")[0].innerHTML.toUpperCase();
+    let item = items[i].getElementsByTagName("h4")[0].innerHTML.toUpperCase();
     if (item.includes(search)) {
       items[i].classList.add("d-flex");
       items[i].classList.remove("d-none");
