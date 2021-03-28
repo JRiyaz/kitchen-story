@@ -25,6 +25,7 @@ suffix: .html
 #   Server port
 server:
   port: 5555
+  contextPath: /kitchen-story
   error:
     whitelabel:
       enabled: false
