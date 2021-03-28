@@ -9,6 +9,7 @@ import com.kitchenstory.service.CartService;
 import com.kitchenstory.service.OrderService;
 import com.kitchenstory.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,6 +36,7 @@ public class OrderController {
     private final HttpServletRequest request;
 
     @GetMapping("{id}")
+    @PreAuthorize("hasAuthority('READ')")
     public String one(@PathVariable String id, Model model) {
         final OrderEntity order = orderService.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("Order with id: " + id + " not found."));
@@ -43,11 +45,13 @@ public class OrderController {
     }
 
     @GetMapping("cart")
+    @PreAuthorize("hasAuthority('READ')")
     public String cart(OrderEntity orderEntity) {
         return "payment";
     }
 
     @GetMapping("all")
+    @PreAuthorize("hasAuthority('READ')")
     public String all(Model model) {
         List<OrderEntity> orders = new ArrayList<>();
         final boolean is_admin = request.isUserInRole("ROLE_ADMIN");
@@ -65,6 +69,7 @@ public class OrderController {
     }
 
     @PostMapping("add")
+    @PreAuthorize("hasAuthority('READ')")
     public String add(@Valid OrderEntity orderEntity, BindingResult result, Model model) {
 
         //        Return the payment page if there are any errors

@@ -6,6 +6,7 @@ import com.kitchenstory.exceptions.DishNotFoundException;
 import com.kitchenstory.service.DishService;
 import lombok.AllArgsConstructor;
 import org.apache.commons.io.IOUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,6 +37,7 @@ public class DishController {
     }
 
     @GetMapping("all")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String allDishes(Model model) {
         final List<DishEntity> dishes = dishService.findAll();
         model.addAttribute("dishes", dishes);
@@ -43,12 +45,14 @@ public class DishController {
     }
 
     @GetMapping("add")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String showAddTemplate(@ModelAttribute("dishEntity") DishEntity dishEntity, Model model) {
         model.addAttribute("header", "Add Dish");
         return "add-dish";
     }
 
     @GetMapping("edit/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String editDish(@PathVariable String id, Model model) {
         final DishEntity dish = dishService.findById(id)
                 .orElseThrow(() -> new DishNotFoundException("Dish with id: " + id + " not found."));
@@ -59,6 +63,7 @@ public class DishController {
     }
 
     @PostMapping("add")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String addDish(@Valid final DishEntity dish, BindingResult result, Model model,
                           RedirectAttributes attributes) throws IOException {
 
@@ -82,10 +87,11 @@ public class DishController {
         final DishEntity dishEntity = dishService.save(dish);
 
         model.addAttribute("dish", dishEntity);
-        return "redirect:/?add-dish=true";
+        return "redirect:/dish/all?add-dish=true";
     }
 
     @PostMapping("add/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String updateDish(@PathVariable String id, @Valid final DishEntity dish, BindingResult result, Model model,
                              RedirectAttributes attributes, HttpServletRequest request) throws IOException {
 
@@ -116,12 +122,13 @@ public class DishController {
 
         final DishEntity entity = dishService.save(dishEntity);
         model.addAttribute("dish", entity);
-        return "redirect:/?update-dish=true";
+        return "redirect:/dish/all?update-dish=true";
     }
 
     @GetMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String deleteDish(@PathVariable String id) {
         dishService.deleteById(id);
-        return "redirect:/?delete-dish=true";
+        return "redirect:/dish/all?delete-dish=true";
     }
 }

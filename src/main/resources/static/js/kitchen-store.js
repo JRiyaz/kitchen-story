@@ -51,25 +51,10 @@ function changePassword() {
 $(document).ready(function () {
   const url = window.location.href;
 
-//  const admin = document.getElementById("admin");
-//  const admin_plus = document.getElementById("admin-plus");
-//  if (url.includes("/user/all")) {
-//    admin.classList.add("s-active");
-//    admin_plus.classList.add("s-active");
-//    document.getElementById("all-users").classList.add("s-active");
-//  } else if (url.includes("/product/add")) {
-//    admin.classList.add("s-active");
-//    admin_plus.classList.add("s-active");
-//    document.getElementById("add-stock").classList.add("s-active");
-//  } else if (url.includes("/order/all")) {
-//    admin.classList.add("s-active");
-//    admin_plus.classList.add("s-active");
-//    document.getElementById("view-orders").classList.add("s-active");
-//  } else if (url.includes("/product/all")) {
-//    admin.classList.add("s-active");
-//    admin_plus.classList.add("s-active");
-//    document.getElementById("view-stock").classList.add("s-active");
-//  }
+  const nav = document.querySelector("nav.navbar");
+
+  if (url.includes("/dish/all") || url.includes("/dish/add") || url.includes("/dish/edit") || url.includes("/dish/all") || url.includes("/user/all") || url.includes("/user/edit"))
+    nav.classList.remove("vh-50");
 
   if (url.includes("?add-to-cart=true"))
     toast("Dish added to cart successfully", "bg-success");

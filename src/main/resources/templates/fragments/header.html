@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="https://www.thymeleaf.org">
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
@@ -60,7 +61,8 @@
                                 <img th:src="@{/img/x.svg}" id="password-icon" alt="" width="20"/>
                             </div>
                             <div class="text-center text-white" th:if="${#lists.isEmpty(dishes)}"
-                                 th:text="${'No Dish Found with Name: ' + param.dish}">No Dish Found</div>
+                                 th:text="${'No Dish Found with Name: ' + param.dish}">No Dish Found
+                            </div>
                             <div class="list-group" th:unless="${#lists.isEmpty(dishes)}">
                                 <a th:href="@{/dish/{id}(id = ${dish.id})}"
                                    class="list-group-item list-group-item-action my-2 rounded"
@@ -88,29 +90,43 @@
 
                 <li class="nav-item dropdown col ms-5">
                     <a class="nav-link dropdown-toggle text-white d-block text-center" href="#" id="navbarDropdown"
-                       role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                       role="button" data-bs-toggle="dropdown" aria-expanded="false" sec:authentication="name">
                         My Account
                     </a>
                     <ul class="dropdown-menu end-0" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" th:href="@{/login}">Login</a></li>
-                        <li><a class="dropdown-item" th:href="@{/user/sign-up}">Sign Up</a></li>
-                        <li><a class="dropdown-item" th:href="@{/user/forgot-password}">Forgot Password</a></li>
-                        <li>
-                            <hr class="dropdown-divider"/>
-                        </li>
-                        <li><a class="dropdown-item" th:href="@{/dish/add}">Add Dish</a></li>
-                        <li><a class="dropdown-item" th:href="@{/order/cart}">View Cart</a></li>
-                        <li><a class="dropdown-item" th:href="@{/order/all}">All Orders</a></li>
-                        <li><a class="dropdown-item" th:href="@{/user/all}">All Users</a></li>
-                        <li><a class="dropdown-item" th:href="@{/dish/all}">All Dishes</a></li>
-                        <li>
-                            <hr class="dropdown-divider"/>
-                        </li>
-                        <li>
-                            <a role="button" class="dropdown-item" href="#" data-bs-toggle="modal"
-                               data-bs-target="#changePassword">Change Password</a>
-                        </li>
-                        <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
+                        <th:block th:unless="${#authentication?.getPrincipal()?.getUsername()}">
+                            <li><a class="dropdown-item" th:href="@{/login}">Login</a></li>
+                            <li><a class="dropdown-item" th:href="@{/user/sign-up}">Sign Up</a></li>
+                            <li><a class="dropdown-item" th:href="@{/user/forgot-password}">Forgot Password</a></li>
+                        </th:block>
+                        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                            <li>
+                                <hr class="dropdown-divider"/>
+                            </li>
+                            <li><a class="dropdown-item" th:href="@{/dish/add}">Add Dish</a></li>
+                            <li><a class="dropdown-item" th:href="@{/dish/all}">All Dishes</a></li>
+                        </th:block>
+                        <th:block sec:authorize="isAuthenticated()">
+                            <li>
+                                <hr class="dropdown-divider"/>
+                            </li>
+                            <li><a class="dropdown-item" th:href="@{/order/cart}">View Cart</a></li>
+                            <li><a class="dropdown-item" th:href="@{/order/all}">View Orders</a></li>
+                            <li>
+                                <a class="dropdown-item" th:href="@{/user/all}"
+                                   th:text="${#authorization.expression('hasRole(''ROLE_ADMIN'')') ? 'All Users' : 'View Profile'}">
+                                    All Users
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider"/>
+                            </li>
+                            <li>
+                                <a role="button" class="dropdown-item" href="#" data-bs-toggle="modal"
+                                   data-bs-target="#changePassword">Change Password</a>
+                            </li>
+                            <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
+                        </th:block>
                     </ul>
                 </li>
 
@@ -129,7 +145,7 @@
                 <div class="modal-body">
                     <p class="text-center">Enter you new password.</p>
                     <form class="form-floating" th:onsubmit="return changePassword()" id="changePasswordForm"
-                    th:action="@{/user/change-password}" method="POST">
+                          th:action="@{/user/change-password}" method="POST">
                         <div class="form-floating mb-3 position-relative">
                             <input type="password" class="form-control" id="password"
                                    placeholder="New Password" required name="password"

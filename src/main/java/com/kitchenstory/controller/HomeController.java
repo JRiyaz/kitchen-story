@@ -22,7 +22,7 @@ public class HomeController {
 
     private final DishService dishService;
 
-    @GetMapping
+    @GetMapping({"/", "index"})
     public String index(Model model) {
         final List<DishEntity> dishes = new ArrayList<>();
         final List<DishEntity> randomDishes = dishService.findTenRandomDishes();
@@ -45,7 +45,7 @@ public class HomeController {
         if (dish != null && dish.length() > 2)
             dishes.addAll(dishService.findByNameContainingIgnoreCase(dish));
         else
-            return "redirect:/?dish-name=false";
+            return "redirect:/index?dish-name=false";
         model.addAttribute("dishes", dishes);
         model.addAttribute("randomDishes", randomDishes);
         model.addAttribute("fourRandomDishes", fourRandomDishes);
@@ -77,7 +77,7 @@ public class HomeController {
         if (user == null)
             return "sign-in";
         else
-            return "redirect:/?user-exists=true";
+            return "redirect:/index?user-exists=true";
     }
 
 }

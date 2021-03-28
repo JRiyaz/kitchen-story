@@ -38,4 +38,8 @@ public class ImageEntity implements Serializable {
     public static String bytesToImageConverter(byte[] imageInBytes) {
         return imageInBytes != null && imageInBytes.length > 0 ? Base64.getEncoder().encodeToString(imageInBytes) : "";
     }
+
+    public static int randomInt() {
+        return ((int) (Math.random() * (9 - 0))) + 0;
+    }
 }

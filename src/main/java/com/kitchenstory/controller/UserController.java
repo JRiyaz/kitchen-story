@@ -5,6 +5,7 @@ import com.kitchenstory.exceptions.UserNotFoundException;
 import com.kitchenstory.model.UserRole;
 import com.kitchenstory.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,7 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("{id}")
+    @PreAuthorize("hasAuthority('READ')")
     public String user(@PathVariable String id, Model model) {
 
         final UserEntity user = userService.findById(id)
@@ -35,13 +37,14 @@ public class UserController {
 
         if (!email.equals(user.getEmail()))
             if (!request.isUserInRole("ROLE_ADMIN"))
-                return "redirect:/?user-unauthorized=true";
+                return "redirect:/index?user-unauthorized=true";
 
         model.addAttribute("user", user);
         return "user";
     }
 
     @GetMapping("all")
+    @PreAuthorize("hasAuthority('READ')")
     public String allUsers(Model model) {
         final boolean is_admin = request.isUserInRole("ROLE_ADMIN");
         if (is_admin)
@@ -57,6 +60,7 @@ public class UserController {
     }
 
     @GetMapping("edit/{id}")
+    @PreAuthorize("hasAuthority('READ')")
     public String editUser(@PathVariable String id, Model model) {
         final UserEntity user = userService.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User with Id: " + id + " not found"));
@@ -65,6 +69,7 @@ public class UserController {
     }
 
     @PostMapping("update/{id}")
+    @PreAuthorize("hasAuthority('READ')")
     public String updateUser(@Valid @ModelAttribute("user") UserEntity userEntity,
                              @PathVariable String id, BindingResult bindingResult) {
 
@@ -102,7 +107,7 @@ public class UserController {
         if (user == null)
             return "sign-up";
         else
-            return "redirect:/?user-exists=true";
+            return "redirect:/index?user-exists=true";
     }
 
     @PostMapping("sign-up")
@@ -126,20 +131,21 @@ public class UserController {
                 .setEnabled(true)
                 .setPassword(passwordEncoder.encode(userEntity.getPassword()));
         userService.save(userEntity);
-        return "redirect:/?sign-up=true";
+        return "redirect:index/?sign-up=true";
     }
 
     @PostMapping("/change-password")
+    @PreAuthorize("hasAuthority('READ')")
     public String changePassword(@RequestParam String password, @RequestParam String confirmPassword) {
         System.out.println(password + " " + confirmPassword);
         if (!password.equals(confirmPassword))
-            return "redirect:/?password-not-matching=true";
+            return "redirect:/index?password-not-matching=true";
         final String email = request.getUserPrincipal().getName();
         final UserEntity user = userService.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("User with Email Id: " + email + " not found."));
         user.setPassword(passwordEncoder.encode(password));
         userService.save(user);
-        return "redirect:/?change-password=true";
+        return "redirect:/index?change-password=true";
     }
 
     @GetMapping("forgot-password")
@@ -153,7 +159,7 @@ public class UserController {
         if (user == null)
             return "forgot-password";
         else
-            return "redirect:/?user-exists=true";
+            return "redirect:/index?user-exists=true";
     }
 
     @PostMapping("forgot-password")

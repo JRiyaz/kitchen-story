@@ -9,6 +9,7 @@ import com.kitchenstory.service.CartService;
 import com.kitchenstory.service.DishService;
 import com.kitchenstory.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,7 @@ public class CartController {
     private final HttpServletRequest request;
 
     @GetMapping("add/{id}")
+    @PreAuthorize("hasAuthority('READ')")
     public String addDish(@PathVariable final String id) {
 
         final String email = request.getUserPrincipal().getName();
@@ -54,6 +56,7 @@ public class CartController {
     }
 
     @GetMapping("delete/{id}")
+    @PreAuthorize("hasAuthority('READ')")
     public String deleteDish(@PathVariable final String id) {
 
         final String email = request.getUserPrincipal().getName();
