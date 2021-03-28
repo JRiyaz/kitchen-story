@@ -4,7 +4,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.http.HttpStatus;
 
 public class ErrorController implements org.springframework.boot.web.servlet.error.ErrorController {
     @Override
@@ -18,7 +17,7 @@ public class ErrorController implements org.springframework.boot.web.servlet.err
 
         String error = null;
 
-         final int statusCode = (int) request.getAttribute("javax.servlet.error.status_code");
+        final int statusCode = (int) request.getAttribute("javax.servlet.error.status_code");
 
         switch (statusCode) {
 

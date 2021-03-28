@@ -53,7 +53,7 @@ $(document).ready(function () {
 
   const nav = document.querySelector("nav.navbar");
 
-  if (url.includes("/dish/all") || url.includes("/dish/add") || url.includes("/dish/edit") || url.includes("/dish/all") || url.includes("/user/all") || url.includes("/user/edit"))
+  if (url.includes("/dish/all") || url.includes("/dish/add") || url.includes("/dish/edit") || url.includes("/dish/all") || url.includes("/user/edit"))
     nav.classList.remove("vh-50");
 
   if (url.includes("?add-to-cart=true"))
