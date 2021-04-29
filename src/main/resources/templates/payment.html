@@ -35,7 +35,7 @@
                         th:each="dish : ${dishes}">
                         <div>
                             <h6 class="my-0" th:text="${dish.name}">Product name</h6>
-                            <small class="text-muted" th:text="${dish.type}">Type</small>
+                            <small class="text-muted" th:text="${#strings.replace(dish.type,'-',' ')}">Type</small>
                         </div>
                         <span class="text-muted align-self-center" th:text="${'₹' + dish.price}">₹295</span>
                         <a th:href="@{/cart/delete/{id}(id = ${dish.id})}"

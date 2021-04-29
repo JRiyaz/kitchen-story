@@ -54,7 +54,7 @@
                             class="card-img-top img-fluid border border-success"
                     />
                 </td>
-                <td th:text="${dish.type}">Type</td>
+                <td th:text="${#strings.replace(dish.type,'-',' ')}">Type</td>
                 <td th:text="${'₹' + dish.price}">₹500</td>
                 <td th:text="${dish.special}">Is Special</td>
                 <td th:text="${dish.spicy}">Is Spicy</td>

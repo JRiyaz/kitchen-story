@@ -26,7 +26,7 @@ public class HomeController {
     public String index(Model model) {
         final List<DishEntity> dishes = new ArrayList<>();
         final List<DishEntity> randomDishes = dishService.findTenRandomDishes();
-        final List<DishEntity> fourRandomDishes = dishService.findFourRandomDishes();
+        final List<DishEntity> fourRandomDishes = randomDishes.subList(1, 5);
 
         model.addAttribute("dishes", dishes);
         model.addAttribute("randomDishes", randomDishes);
@@ -40,7 +40,7 @@ public class HomeController {
 
         final List<DishEntity> dishes = new ArrayList<>();
         final List<DishEntity> randomDishes = dishService.findTenRandomDishes();
-        final List<DishEntity> fourRandomDishes = dishService.findFourRandomDishes();
+        final List<DishEntity> fourRandomDishes = randomDishes.subList(1, 5);
 
         if (dish != null && dish.length() > 2)
             dishes.addAll(dishService.findByNameContainingIgnoreCase(dish));
